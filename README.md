@@ -58,6 +58,14 @@ Do tej pory pionierem do spraw języka naturalnego w wielu językach był googlo
 
 ### HerBERT
 
+### Model językowy autorstwa Teresy Sas
+
+Model jest zbudowany na zasobach tekstów o tematyce akademickiej i ogólnej, obejmując prawie 800 tyś. słów. W linku możemy pobrać zipa w którym znajdują się trzy pliki:
+•	model_2d_forward.txt - model bigramowy zawierający prawdopodobieństwa następstwa słów p(w_i | w_{i-1} ) dla porządku od lewej do prawej
+•	model 3d_bakward.txt - model trigramowy zawierający prawdopodobieństwa p( w_i | w_{i+1} w_{i+2} ) dla porządku odwróconego
+•	word_list.txt - lista słów występujących w modelu
+
+Model może być wykorzystany w badaniach nad rozpoznawaniem mowy i w inżynierii języka naturalnego dla języka polskiego.
 
 
 ## Korpusy językowe
