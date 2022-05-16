@@ -54,8 +54,100 @@ Do tej pory pionierem do spraw języka naturalnego w wielu językach był googlo
 
 ### BERT
 
+Model stworzony przez Google, na jego podstawie stworzono najlepsze polskie modele. Architektura BERT polega na nauce poprzez usuwanie ze zdania losowo kilka słów, i następnie model ma się nauczyć jak najlepiej wypełnić te dziury. Przy odpowiednio dużym korpusie z czasem  model coraz lepiej poznaje zależności semantyczne między słowami.
+
+
 ### RoBERTa
 
+Model stworzony przez Ośrodek Przetwarzania Informacji na podstawie BERTa. Powstały dwa modele, large i base, z czego large został wytrenowany na około 130GB danych, a do mniejszy na 20GB. Z obu można korzystać w zależności od potrzeb i możliwości technicznych. Pierwszy oferuje większą precyzje ale zarazem wymaga większej mocy obliczeniowej, gdzie drugi jest szybszy lecz ofertuje nieco gorsze wyniki.
+
+Modele zostały wytrenowane na dwa sposoby, korzystając z toolkitu [fairseq](https://github.com/pytorch/fairseq) i [Huggingface Transformers](https://github.com/huggingface/transformers). Fairseq służy do modelowania sekwencyjnego i pozwala trenenować nieszablonowe modele do tłumaczeń, modeli językowych, uogalniania oraz innych zadań związanych z tekstem, gdzie Huggingface dostarcza tysiące pre-trained modeli do zadań dotyczących tekstu, obrazów, oraz audio.
+
+
+<table>
+<thead>
+<th>Model</th>
+<th>L / H / A*</th>
+<th>Batch size</th>
+<th>Update steps</th>
+<th>Corpus size</th>
+<th>KLEJ Score**</th> 
+<th>Fairseq</th>
+<th>Transformers</th>
+</thead>
+<tr>
+  <td>RoBERTa&nbsp;(base)</td>
+  <td>12&nbsp;/&nbsp;768&nbsp;/&nbsp;12</td>
+  <td>8k</td>
+  <td>125k</td>
+  <td>~20GB</td>
+  <td>85.39</td>
+  <td>
+  <a href="https://github.com/sdadas/polish-roberta/releases/download/models/roberta_base_fairseq.zip">v0.9.0</a>
+  </td>
+  <td>
+  <a href="https://github.com/sdadas/polish-roberta/releases/download/models-transformers-v3.4.0/roberta_base_transformers.zip">v3.4</a>
+  </td>
+</tr>
+<tr>
+  <td>RoBERTa&#8209;v2&nbsp;(base)</td>
+  <td>12&nbsp;/&nbsp;768&nbsp;/&nbsp;12</td>
+  <td>8k</td>
+  <td>400k</td>
+  <td>~20GB</td>
+  <td>86.72</td>
+  <td>
+  <a href="https://github.com/sdadas/polish-roberta/releases/download/models-v2/roberta_base_fairseq.zip">v0.10.1</a>
+  </td>
+  <td>
+  <a href="https://github.com/sdadas/polish-roberta/releases/download/models-v2/roberta_base_transformers.zip">v4.4</a>
+  </td>
+</tr>
+<tr>
+  <td>RoBERTa&nbsp;(large)</td>
+  <td>24&nbsp;/&nbsp;1024&nbsp;/&nbsp;16</td>
+  <td>30k</td>
+  <td>50k</td>
+  <td>~135GB</td>
+  <td>87.69</td>
+  <td>
+  <a href="https://github.com/sdadas/polish-roberta/releases/download/models/roberta_large_fairseq.zip">v0.9.0</a>
+  </td>
+  <td>
+  <a href="https://github.com/sdadas/polish-roberta/releases/download/models-transformers-v3.4.0/roberta_large_transformers.zip">v3.4</a>
+  </td>
+</tr>
+<tr>
+  <td>RoBERTa&#8209;v2&nbsp;(large)</td>
+  <td>24&nbsp;/&nbsp;1024&nbsp;/&nbsp;16</td>
+  <td>2k</td>
+  <td>400k</td>
+  <td>~200GB</td>
+  <td>88.87</td>
+  <td>
+  <a href="https://github.com/sdadas/polish-roberta/releases/download/models-v2/roberta_large_fairseq.zip">v0.10.2</a>
+  </td>
+  <td>
+  <a href="https://github.com/sdadas/polish-roberta/releases/download/models-v2/roberta_large_transformers.zip">v4.14</a>
+  </td>
+</tr>
+  <tr>
+  <td>DistilRoBERTa</td>
+  <td>6&nbsp;/&nbsp;768&nbsp;/&nbsp;12</td>
+  <td>1k</td>
+  <td>10ep.</td>
+  <td>~20GB</td>
+  <td>84.55</td>
+  <td>
+  n/a
+  </td>
+  <td>
+  <a href="https://github.com/sdadas/polish-roberta/releases/download/models-v2/distilroberta_transformers.zip">v4.13</a>
+  </td>
+</tr>
+</table>
+
+\* L - the number of encoder blocks, H - hidden size, A - the number of attention heads <br/>
 ### HerBERT
 
 ### Model językowy autorstwa Teresy Sas
