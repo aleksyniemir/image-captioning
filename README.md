@@ -3,7 +3,8 @@
 Na tym githubie znajduje się opis wybranych zagadnień używanych w image captioning. W opis wchodzą takie rzeczy jak sposób korzystania, teoretyczny opis, jak się korzysta, w jakich artykułach zostały opublikowane, itp. Lista zagadnień:
 - stemming
 - leamatyzacja
-- dezambiguacja
+- tagowanie
+- tokenizacja
 - rozpoznawanie części mowy
 - korpusy językowe
 - zbiory uczące
@@ -12,37 +13,127 @@ Na tym githubie znajduje się opis wybranych zagadnień używanych w image capti
 - przetwarzanie języka naturalnego
 
 ## Stemming
+pokazac jakie sa algorytmy
+co to jest ntlk
+jkakie bilibitoeki
 
-Stemming to inaczej proces wyciągnięcia rdzenia ze słowa (części, która jest odporna na odmiany przez przyimki, rodzaje, itp).
+
+Stemming to inaczej proces wyciągnięcia rdzenia ze słowa (części, która jest odporna na odmiany 
+przez przyimki, rodzaje, itp). W tym temacie jak i w wielu innych specjaluzuje się zespół tworzący NLTK. 
+Jest to platforma, która tworzy aplikacje opierające się o dane dotyczące ludzkiego języka.
+Udostępnia łatwe w użyciu interfejsy do ponad 50 korpusów i zasobów leksykalnych, takich jak WordNet,
+wraz z zestawieniem bibliotek do przetwarzania tekstu do klasyfikacji, tokenizacji, stemmingu,
+tagowania, parsowania, wnioskowania semantycznego oraz wrapperami do bibliotek NLP o znaczeniu przemysłowym.
+
+NLTK dostarcza wiele implementacji różnych algorytmów, między innymi:
+* arlstem - do języka Arabskiego
+* cistem - do języka Niemieckiego
+* isri - do języka Arabskiego
+* rslp - do języka Portugalskiego
+* snowball - obsługuje parenaście języków, niestety bez języka polskiego
+* lancester - oparty na algorytmie Lancestera
+* porter - oparty na algorytmie Portera
+
+Dla przykładu sposób działania stemmera Regexp, który używa wyrażeń regularnych do identyfikacji 
+afiksów morfologicznych i usuwa wszystkie podłańcuchy pasujące do wyrażeń regularnych:
+```python
+>>> from nltk.stem import RegexpStemmer
+>>> st = RegexpStemmer('ing$|s$|e$|able$', min=4)
+>>> st.stem('cars')
+'car'
+>>> st.stem('mass')
+'mas'
+>>> st.stem('was')
+'was'
+>>> st.stem('bee')
+'bee'
+>>> st.stem('compute')
+'comput'
+>>> st.stem('advisable')
+'advis'
+```
+
+Jeśli chodzi specyficznie o język polski z pomocą przychodzi Stempel - stemmer początkowo 
+napisany w javie. Pakiet zawiera tabelki stemmingowe dla języka polskiego, oryginalnie przygotowane na
+20,000 zestawach treningowych, oraz nową wersję przygotowaną na 259,000 zestawach z 
+słownika Polimorf.
+
+Przykład użycia:
+```python
+>>> for word in ['książka', 'książki', 'książkami', 'książkowa', 'książkowymi']:
+...   print(stemmer(word))
+...
+książek
+książek
+książek
+książkowy
+książkowy
+```
 
 ## Lematyzacja
 
-Lematyzacja oznacza sprowadzenie grupy wyrazów stanowiących odmianę danego zwrotu do wspólnej postaci, umożliwiając traktowanie ich wszystkich jako to samo słowo. W przetwarzaniu języka naturalnego odgrywa rolę ujednoznaczenia, np. słowa "are", "is", "Am", pochodzą od słowa "Be".
+Lematyzacja oznacza sprowadzenie grupy wyrazów stanowiących odmianę danego zwrotu do wspólnej 
+postaci, umożliwiając traktowanie ich wszystkich jako to samo słowo. W przetwarzaniu języka 
+naturalnego odgrywa rolę ujednoznaczenia, np. słowa "are", "is", "Am", pochodzą od słowa "Be".
 
-Algorytm  do lematyzacji:
+Do zaimplemenotwania lematyzacji przychodzi z pomocą WordNet, wchodzący w skład oprogramowania 
+open-source NLTK. 
 
-	Sprowadzamy wszystkie słowa do zapisu lower case.
-  
-  	W głównej pętli:
-    
-  	Znajdujemy pozycję ostatniej litery w słowie i sprawdzamy czy jest ona jednym z kluczy w naszym słowniku reguł. Jeżeli nie, kończymy pracę algorytmu.
-    
-  	Pobieramy "kubełek" z regułami ze słownika na podstawie klucza (ostatniej litery).
-    
-  	W pętli wewnętrznej dla każdego kubełka:
-    
-    	Sprawdzamy, czy końcówka zapisana w regule znajduje się na końcu modyfikowanego słowa. Jeżeli nie, przechodzimy do kolejnej reguły.
-      
-    	Sprawdzamy czy reguła miała ustawioną flagę nienaruszalności: jeżeli tak, sprawdzamy czy słowo przez nas przetwarzane nie zostało zmienione przez poprzednie reguły. Jeżeli zostało, pomijamy działanie tej reguły.
-      
-    	Modyfikujemy słowo na podstawie danych z reguły.
-      
-    	Oznaczamy słowo jako zmodyfikowane.
-      
-    	Dodatkowo jeżeli reguła miała ustawioną flagę kontynuacji, wychodzimy z wewnętrznej pętli i kontynuujemy działanie algorytmu.
-      
 
-Implementacja danego algorytmu znajduje się o [tutaj](http://horusiath.blogspot.com/2012/08/nlp-stemming-i-lematyzacja.html).
+
+## Tagowanie
+
+Tagging to inaczej proces klasyfikowania słów na ich części mowy i odpowiedniego ich oznaczania .
+Części mowy są również znane jako klasy słów lub kategorie leksykalne. Zbiór znaczników używanych 
+w danym zadaniu nazywany jest zbiorem znaczników. 
+
+Przykład użycia z NLTK do tagowania:
+```python
+>>> import nltk
+>>> sentence = """At eight o'clock on Thursday morning
+... Arthur didn't feel very good."""
+>>> tokens = nltk.word_tokenize(sentence)
+>>> tagged = nltk.pos_tag(tokens)
+>>> tagged[0:6]
+[('At', 'IN'), ('eight', 'CD'), ("o'clock", 'JJ'), ('on', 'IN'),
+('Thursday', 'NNP'), ('morning', 'NN')]
+```
+
+## Tokenizacja 
+
+Tokenizatory dzielą ciągi znaków na listy podłańcuchów, na przykład mogą 
+być używane do znajdowania słów i znaków interpunkcyjnych w łańcuchu znaków, dla przykładu 
+tokenizer z paczki NLTK:
+```python
+>>> from nltk.tokenize import word_tokenize
+>>> s = '''Good muffins cost $3.88\nin New York.  Please buy me
+... two of them.\n\nThanks.'''
+>>> word_tokenize(s)
+['Good', 'muffins', 'cost', '$', '3.88', 'in', 'New', 'York', '.',
+'Please', 'buy', 'me', 'two', 'of', 'them', '.', 'Thanks', '.']
+```
+
+NLTK udostępnia również prostszy tokenizer oparty na wyrażeniach regularnych, który
+dzieli tekst na podstawie spacji i interpunkcji:
+
+```python
+>>> from nltk.tokenize import wordpunct_tokenize
+>>> wordpunct_tokenize(s)
+['Good', 'muffins', 'cost', '$', '3', '.', '88', 'in', 'New', 'York', '.',
+'Please', 'buy', 'me', 'two', 'of', 'them', '.', 'Thanks', '.']
+```
+
+Możemy również operować na poziomie zdań, używając tokenizatora zdań 
+w następujący sposób:
+
+```python
+>>> from nltk.tokenize import sent_tokenize, word_tokenize
+>>> sent_tokenize(s)
+['Good muffins cost $3.88\nin New York.', 'Please buy me\ntwo of them.', 'Thanks.']
+>>> [word_tokenize(t) for t in sent_tokenize(s)]
+[['Good', 'muffins', 'cost', '$', '3.88', 'in', 'New', 'York', '.'],
+['Please', 'buy', 'me', 'two', 'of', 'them', '.'], ['Thanks', '.']]
+```
 
 ## Modele językowe 
 
@@ -108,7 +199,7 @@ Wyniki obydwu wariantów w rankingu KLEJ:
 
 ### RoBERTa
 
-Model stworzony przez Ośrodek Przetwarzania Informacji na podstawie BERTa. Powstały dwa modele, large i base, z czego large został wytrenowany na około 130GB danych, a do mniejszy na 20GB. Z obu można korzystać w zależności od potrzeb i możliwości technicznych. Pierwszy oferuje większą precyzje ale zarazem wymaga większej mocy obliczeniowej, gdzie drugi jest szybszy lecz ofertuje nieco gorsze wyniki.
+Model stworzony przez Ośrodek Przetwarzania Informacji na podstawie BERTa. Powstały dwa modele, large i base, z czego large został wytrenowany na około 130GB danych, a do mniejszy na 20GB - wśród korpusy znajdowały się wysokiej jakości teksty z wikipedii, dokumenty polskiego parlamentu, wypowiedzi z mediów społecznościowych, książki, artykuły, oraz dłuższe formy pisane. Z obu można korzystać w zależności od potrzeb i możliwości technicznych. Pierwszy oferuje większą precyzje ale zarazem wymaga większej mocy obliczeniowej, gdzie drugi jest szybszy lecz ofertuje nieco gorsze wyniki.
 
 Modele zostały wytrenowane na dwa sposoby, korzystając z toolkitu [fairseq](https://github.com/pytorch/fairseq) i [Huggingface Transformers](https://github.com/huggingface/transformers). Fairseq służy do modelowania sekwencyjnego i pozwala trenenować nieszablonowe modele do tłumaczeń, modeli językowych, uogalniania oraz innych zadań związanych z tekstem, gdzie Huggingface dostarcza tysiące pre-trained modeli do zadań dotyczących tekstu, obrazów, oraz audio.
 
@@ -308,7 +399,7 @@ Korpus językowy to zbiór tekstów służących badaniom lingwistycznym, np. ok
 ### Korpus NKJP
 Istnieją dwie wyszukiwarki stworzone na jego bazie:
 
-#### IPI PANh
+#### IPI PAN
 
 ttp://nkjp.pl/poliqarp/
 
@@ -320,6 +411,7 @@ ttp://nkjp.pl/poliqarp/
 
 ####	PELCRA
 
+ile tego jest, do czego uzyto, czy jest przydatny
 http://www.nkjp.uni.lodz.pl/
 
 ### Korpus opisanych obrazów z adnotacjami
@@ -328,10 +420,12 @@ http://zil.ipipan.waw.pl/Scwad/AIDe
 
 ### Korpus dyskursu parlamentarnego
 
+ile tego jest, do czego uzyto, czy jest przydatny
 https://kdp.nlp.ipipan.waw.pl/query_corpus/
 
 ## Word embeddings
 
+wziac z z daddasa 
 [Ewaluacja polskich embeddingów](https://github.com/Ermlab/polish-word-embeddings-review) stworzona przez wiele grup badawczych.
 
 W powyższej implementacji została użyta biblioteka „gensim”, która pozwala wczytać dane, wytrenować model, oraz końcowo sprawdzić wyniki. Oprócz tworzenia wektorowych przedstawień słów biblioteka ma wiele innych funkcji, między innymi może znajdować semantycznie podobne dokumenty do tego który został jej zadany. Żeby określić word-embedinngi w powyższej implementacji używana jest funkcja "evaluation_word_pairs" oraz "assessment_word_analogies" z biblioteki gensim.
@@ -343,6 +437,9 @@ Obszerna tabelka z wynikami znajduje się w podanym w pierwszej linijce linku.
 
 ## Zbiory danych
 
+zbiory ktore udostepnil gooogle
+
+
 [Zbiór](https://dl.fbaipublicfiles.com/fasttext/word-analogies/questions-words-pl.txt) zawiwerający pary słów a następnie skojarzone z nimi następne pary słów.
 
 [Zbiór](https://opus.nlpl.eu/OpenSubtitles-v2018.php) zawierający polskie napisy do filmów. Z dwóch źródeł się dowiedziałem, że zawiera sporo powtórzeń.
@@ -353,7 +450,7 @@ Obszerna tabelka z wynikami znajduje się w podanym w pierwszej linijce linku.
 - https://clarin-pl.eu/dspace/handle/11321/606
 - https://clarin-pl.eu/dspace/handle/11321/600
 - https://clarin-pl.eu/dspace/handle/11321/327
-- http://vectors.nlpl.eu/repository (id: 62,167)
+- http://vectors.nlpl.eu/repository 
 - https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.pl.300.bin.gz
 
 ### Zbiory użyte do HerBERTa
