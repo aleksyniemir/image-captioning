@@ -1,11 +1,14 @@
 # image-captioning w języku polskim
 
-Na tym githubie znajduje się opis wybranych zagadnień używanych w image captioning. W opis wchodzą takie rzeczy jak sposób korzystania, teoretyczny opis, jak się korzysta, w jakich artykułach zostały opublikowane, itp. Lista zagadnień:
+Na tym githubie znajduje się opis wybranych zagadnień używanych w image captioning do języka polskiego. 
+W opis wchodzą takie rzeczy jak sposób korzystania, teoretyczny opis, jak się korzysta, 
+w jakich artykułach zostały opublikowane, itp. 
+
+Lista zagadnień:
 - stemming
 - leamatyzacja
 - tagowanie
 - tokenizacja
-- rozpoznawanie części mowy
 - korpusy językowe
 - zbiory uczące
 - zbiory do wstępnego uczenia
@@ -13,13 +16,13 @@ Na tym githubie znajduje się opis wybranych zagadnień używanych w image capti
 - przetwarzanie języka naturalnego
 
 ## Stemming
-pokazac jakie sa algorytmy
-co to jest ntlk
-jkakie bilibitoeki
-
 
 Stemming to inaczej proces wyciągnięcia rdzenia ze słowa (części, która jest odporna na odmiany 
-przez przyimki, rodzaje, itp). W tym temacie jak i w wielu innych specjaluzuje się zespół tworzący NLTK. 
+przez przyimki, rodzaje, itp). 
+
+### NTLK
+NLTK zawiera dużo bibliotek wykonujących stemming na wiele sposobów jak i narzędzia wykonujące
+inne funkcje. 
 Jest to platforma, która tworzy aplikacje opierające się o dane dotyczące ludzkiego języka.
 Udostępnia łatwe w użyciu interfejsy do ponad 50 korpusów i zasobów leksykalnych, takich jak WordNet,
 wraz z zestawieniem bibliotek do przetwarzania tekstu do klasyfikacji, tokenizacji, stemmingu,
@@ -53,12 +56,30 @@ afiksów morfologicznych i usuwa wszystkie podłańcuchy pasujące do wyrażeń 
 'advis'
 ```
 
+Więcej informacji apropo każdego z wymienionych stemmerów znajduje się [tutaj](https://www.nltk.org/api/nltk.stem.html).
+
+### Stempel
 Jeśli chodzi specyficznie o język polski z pomocą przychodzi Stempel - stemmer początkowo 
-napisany w javie. Pakiet zawiera tabelki stemmingowe dla języka polskiego, oryginalnie przygotowane na
-20,000 zestawach treningowych, oraz nową wersję przygotowaną na 259,000 zestawach z 
+napisany w javie. Został stworzony w projekcie [Egothor](https://www.egothor.org/product/egothor2/),
+który polegał na stworzeniu Open Source wyszukiwarki tekstu ze wszystkimi funkcjami tego zagadnienia.
+Po jakimś czasie zostal też włączony jako część [Apache Lucene](https://lucene.apache.org/core/3_1_0/api/contrib-stempel/index.html),
+ darmowej i Open Source biblioteki wyszukiwarek. Jest on również wykorzystywana przez wyszukiwarkę 
+Elastic Search.
+
+Pakiet zawiera tabelki stemmingowe dla języka polskiego, oryginalnie przygotowane na
+20,000 zestawach treningowych, oraz nową wersję przygotowaną na 259,000 zestawach ze
 słownika Polimorf.
 
-Przykład użycia:
+#### Przykład użycia:
+Użycie oryginalnej wersji:
+```python
+>>> stemmer = StempelStemmer.default()
+```
+Lub wersji z nowszą tabelką steemingową pretrained na słowniku Polimorf:
+```python
+>>> stemmer = StempelStemmer.polimorf()
+```
+Użycie:
 ```python
 >>> for word in ['książka', 'książki', 'książkami', 'książkowa', 'książkowymi']:
 ...   print(stemmer(word))
@@ -70,40 +91,72 @@ książkowy
 książkowy
 ```
 
-## Lematyzacja
+Więcej informacji o steemerze znajduje się o [tutaj](https://github.com/dzieciou/pystempel).
+
+
+## Lematyzacja i Tagowanie
 
 Lematyzacja oznacza sprowadzenie grupy wyrazów stanowiących odmianę danego zwrotu do wspólnej 
 postaci, umożliwiając traktowanie ich wszystkich jako to samo słowo. W przetwarzaniu języka 
 naturalnego odgrywa rolę ujednoznaczenia, np. słowa "are", "is", "Am", pochodzą od słowa "Be".
 
-Do zaimplemenotwania lematyzacji przychodzi z pomocą WordNet, wchodzący w skład oprogramowania 
-open-source NLTK. 
-
-
-
-## Tagowanie
-
-Tagging to inaczej proces klasyfikowania słów na ich części mowy i odpowiedniego ich oznaczania .
+Tagowanie to inaczej proces klasyfikowania słów na ich części mowy i odpowiedniego ich oznaczania .
 Części mowy są również znane jako klasy słów lub kategorie leksykalne. Zbiór znaczników używanych 
-w danym zadaniu nazywany jest zbiorem znaczników. 
+w danym zadaniu nazywany jest zbiorem znaczników. Praca która dokładnie opisuje wiele aspektów
+dotyczących tagowania znajduje się [tutaj](http://nlp.ipipan.waw.pl/Bib/kob:kie:16.pdf).
 
-Przykład użycia z NLTK do tagowania:
-```python
->>> import nltk
->>> sentence = """At eight o'clock on Thursday morning
-... Arthur didn't feel very good."""
->>> tokens = nltk.word_tokenize(sentence)
->>> tagged = nltk.pos_tag(tokens)
->>> tagged[0:6]
-[('At', 'IN'), ('eight', 'CD'), ("o'clock", 'JJ'), ('on', 'IN'),
-('Thursday', 'NNP'), ('morning', 'NN')]
-```
+### Morfeusz 2
+
+Morfeusz 2 stanowi nową implementację
+analizatora morfologicznego dla języka polskiego. Poprzednie wersje programu  stały się 
+podstawą wielu narzędzi przetwarzania języka, w szczególności kilku tagerów
+i parserów języka polskiego. 
+Wersja druga programu, opracowana jako część infrastruktury Clarin-PL,
+różni się od porzednika wieloma ważnymi ulepszeniami.
+
+Oto przykład wyników działania programu dla tekstu „Mam próbkę analizy morfologicznej.”:
+
+|Segment	|Forma ortograficzna | 	Lemat                                | 	Znacznik                 |
+| --------  | ------------------ |---------------------------------------|---------------------------|
+|0–1	    |Mam	              | mama	                                 | subst:pl:gen:f            |
+|        |                       | mamić	                                | impt:sg:sec:imperf        |
+|        |                       | mieć	                                 | fin:sg:pri:imperf         |
+|1–2	    |próbkę	               | próbka	                               | subst:sg:acc:f            |
+|2–3	    |analizy	           | analiza	                              | subst:sg:gen:f            |
+|        |                         |                                       | subst:pl:nom.acc.voc:f    |
+|3–4	    |morfologicznej	        | morfologiczny | 	adj:sg:gen.dat.loc:f:pos |
+|4–5	    |.	                    | .	       |  interp                   |
+
+Istnieją trzy warianty danych fleksyjnych dostępnych w Morfeuszu 2:
+
+* najstarszy — SIaT, przygotowany poprzez skonfrontowanie danych „Schematycznego 
+indeksu a tergo polskich form wyrazowych” (SIaT) Jana Tokarskiego i Zygmunta Saloniego z
+listą haseł słownika Doroszewskiego,
+* SGJP, korzystający z danych „Słownika gramatycznego języka polskiego” — SGJP (dane liczbowe
+można znaleźć tutaj),
+* Polimorf, wykorzystujący słownik fleksyjny Polimorf stanowiący połączenie danych SGJP z 
+tworzonymi społecznościowo danymi Morfologika/sjp.pl.
+
+### Przykład użycia
+
+##### GUI
+Morfeusz 2 zawiera [GUI](http://morfeusz.sgjp.pl/download/gui/) napisane w C++, które nie wymaga przykładu użycia.
+
+##### Użycie z poziomu C++
+[Dokumentacja](http://download.sgjp.pl/morfeusz/Morfeusz2.pdf) zawiera sześć stron (7-13) dokładnie opisanych kroków,
+które należy wykonać do użycia interesująych nas opcji.
+
+
+
 
 ## Tokenizacja 
 
 Tokenizatory dzielą ciągi znaków na listy podłańcuchów, na przykład mogą 
-być używane do znajdowania słów i znaków interpunkcyjnych w łańcuchu znaków, dla przykładu 
-tokenizer z paczki NLTK:
+być używane do znajdowania słów i znaków interpunkcyjnych w łańcuchu znaków.
+
+### NTLK
+Przykład użycia tokenizatora z [paczki NTLK](https://www.nltk.org/api/nltk.tokenize.html), najprostszy moduuł
+tokenizujący:
 ```python
 >>> from nltk.tokenize import word_tokenize
 >>> s = '''Good muffins cost $3.88\nin New York.  Please buy me
@@ -313,7 +366,7 @@ output = roberta.extract_features(input)
 print(output[0][1])
 ```
 
-#### Jak używać z Hugging Transformers
+#### Jak używać Hugging Transformers
 
 ```python
 import torch, os
@@ -391,17 +444,167 @@ Model jest zbudowany na zasobach tekstów o tematyce akademickiej i ogólnej, ob
 
 Model może być wykorzystany w badaniach nad rozpoznawaniem mowy i w inżynierii języka naturalnego dla języka polskiego.
 
+Więcej informacji apropo modelu można zaleźć o [tutaj](https://zasobynauki.pl/zasoby/model-jezykowy-dla-jezyka-polskiego,55644/).
 
-## Korpusy językowe
 
-Korpus językowy to zbiór tekstów służących badaniom lingwistycznym, np. określaniu częstości występowania form wyrazowych, konstrukcji składniowych lub kontekstów, w jakich pojawiają się dane wyrazy.
 
-### Korpus NKJP
+
+
+
+
+
+
+
+## Word embeddings
+
+### Ewaluacja polskich word embeddingów stworzona przez wiele grup badawczych
+
+W powyższej implementacji została użyta biblioteka „gensim”, która pozwala wczytać dane, wytrenować model, 
+oraz końcowo sprawdzić wyniki. Oprócz tworzenia wektorowych przedstawień słów biblioteka ma wiele innych funkcji,
+między innymi może znajdować semantycznie podobne dokumenty do tego który został jej zadany. Żeby określić 
+word-embedinngi w powyższej implementacji używana jest funkcja "evaluation_word_pairs" oraz "assessment_word_analogies" z biblioteki gensim.
+
+Do testowania został użyty plik dostarczony przez [facebook fastext](https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.pl.300.vec.gz). Żeby określić podobieństwo słów użyto polskiej wersji [SimLex999](http://zil.ipipan.waw.pl/CoDeS?action=AttachFile&do=view&target=MSimLex999_Polish.zip), stworzonej przez IPIPAN.
+
+Dokładniejszy opis jak i Obszerna tabelka z wynikami znajduje się w podanym w pierwszej linijce linku.
+
+### Opis word embeddingów Sławomira Dadasa
+
+Poniższe rozdziały zawierają pretrained word embeddings dla językach polskiego. Każdy model został wytrenowany
+na korpusie składającym się z zasobów polskiej Wikipedii, polskich książek i artykułów, w sumie 1,5 miliarda tokenów.
+
+#### Word2vec
+Word2Vec został wytrenowany za pomocą biblioteki Gensim. 100 wymiarów, próbkowanie negatywne, zawiera lematyzowane słowa, 
+które mają 3 lub więcej wystąpień w korpusie oraz dodatkowo zestaw predefiniowanych symboli interpunkcyjnych, 
+wszystkie liczby od 0 do 10000, polskie imiona i nazwiska. 
+
+ Przykład użycia:
+```python
+from gensim.models import KeyedVectors
+
+if __name__ == '__main__':
+    word2vec = KeyedVectors.load("word2vec_polish.bin")
+    print(word2vec.similar_by_word("bierut"))
+    
+# [('cyrankiewicz', 0.818274736404419), ('gomułka', 0.7967918515205383), ('raczkiewicz', 0.7757788896560669), ('jaruzelski', 0.7737460732460022), ('pużak', 0.7667238712310791)]
+```
+
+#### FastText
+
+FastText trenowany za pomocą biblioteki Gensim. Słownictwo i wymiarowość są identyczne jak w modelu Word2Vec. 
+
+Przykład użycia:
+
+```python
+from gensim.models import KeyedVectors
+
+if __name__ == '__main__':
+    word2vec = KeyedVectors.load("fasttext_100_3_polish.bin")
+    print(word2vec.similar_by_word("bierut"))
+    
+# [('bieruty', 0.9290274381637573), ('gierut', 0.8921363353729248), ('bieruta', 0.8906412124633789), ('bierutow', 0.8795544505119324), ('bierutowsko', 0.839280366897583)]
+```
+
+#### GloVe
+
+Globalne wektory do reprezentacji słów (GloVe) trenowane przy użyciu implementacji referencyjnej ze Stanford NLP. 
+100 wymiarów, zawiera lematyzowane słowa, które mają 3 lub więcej wystąpień w korpusie. 
+
+Przykład użycia:
+
+```python
+from gensim.models import KeyedVectors
+
+if __name__ == '__main__':
+    word2vec = KeyedVectors.load_word2vec_format("glove_100_3_polish.txt")
+    print(word2vec.similar_by_word("bierut"))
+    
+# [('cyrankiewicz', 0.8335597515106201), ('gomułka', 0.7793121337890625), ('bieruta', 0.7118682861328125), ('jaruzelski', 0.6743760108947754), ('minc', 0.6692837476730347)]
+```
+
+#### Skompresowane Word2vec
+
+Jest to skompresowana wersja opisanego powyżej modelu Word2Vec. Do kompresji wykorzystano metodę opisaną w 
+[Compressing Word Embeddings via Deep Compositional Code Learning](https://arxiv.org/abs/1711.01068) autorstwa Shu
+i Nakayamy. Skompresowane embeddingi 
+nadają się do stosowania w urządzeniach o ograniczonej pamięci, takich jak telefony komórkowe. Model waży 38 MB, co 
+stanowi zaledwie 4,4% rozmiaru oryginalnych embeddingów Word2Vec. Mimo że autorzy artykułu twierdzą, że kompresja ich
+metodą nie wpływa na wydajność modelu, został zauważony niewielki, ale akceptowalny spadek dokładności, przy użyciu 
+skompresowanej wersji embeddingów.
+
+Przykładowa klasa dekodera wraz z użyciem:
+```python
+import gzip
+from typing import Dict, Callable
+import numpy as np
+
+class CompressedEmbedding(object):
+
+    def __init__(self, vocab_path: str, embedding_path: str, to_lowercase: bool=True):
+        self.vocab_path: str = vocab_path
+        self.embedding_path: str = embedding_path
+        self.to_lower: bool = to_lowercase
+        self.vocab: Dict[str, int] = self.__load_vocab(vocab_path)
+        embedding = np.load(embedding_path)
+        self.codes: np.ndarray = embedding[embedding.files[0]]
+        self.codebook: np.ndarray = embedding[embedding.files[1]]
+        self.m = self.codes.shape[1]
+        self.k = int(self.codebook.shape[0] / self.m)
+        self.dim: int = self.codebook.shape[1]
+
+    def __load_vocab(self, vocab_path: str) -> Dict[str, int]:
+        open_func: Callable = gzip.open if vocab_path.endswith(".gz") else open
+        with open_func(vocab_path, "rt", encoding="utf-8") as input_file:
+            return {line.strip():idx for idx, line in enumerate(input_file)}
+
+    def vocab_vector(self, word: str):
+        if word == "<pad>": return np.zeros(self.dim)
+        val: str = word.lower() if self.to_lower else word
+        index: int = self.vocab.get(val, self.vocab["<unk>"])
+        codes = self.codes[index]
+        code_indices = np.array([idx * self.k + offset for idx, offset in enumerate(np.nditer(codes))])
+        return np.sum(self.codebook[code_indices], axis=0)
+
+if __name__ == '__main__':
+    word2vec = CompressedEmbedding("word2vec_100_3.vocab.gz", "word2vec_100_3.compressed.npz")
+    print(word2vec.vocab_vector("bierut"))
+```
+
+Więcej informacji o word embeddingach możemy znaleźć o [tutaj](https://github.com/sdadas/polish-nlp-resources).
+
+
+
+
+
+
+
+
+
+
+## Zbiory danych
+
+[Github](https://github.com/Ermlab/pl-sentiment-analysis) zawierający zbiór Opineo - recenzje ze sklepów online.
+
+[Zbiór](https://dl.fbaipublicfiles.com/fasttext/word-analogies/questions-words-pl.txt) zawiwerający pary słów a następnie skojarzone z nimi następne pary słów.
+
+[Zbiór](https://opus.nlpl.eu/OpenSubtitles-v2018.php) zawierający polskie napisy do filmów. Z dwóch źródeł się dowiedziałem, że zawiera sporo powtórzeń.
+
+[Zbiór](https://dl.fbaipublicfiles.com/fasttext/word-analogies/questions-words-pl.txt) zawierjający analogie ("Ateny Grecja Bagdad Irak")
+, przydatny do word embedinggsów.
+### Korpusy językowe
+
+Korpus językowy to zbiór tekstów służących badaniom lingwistycznym, np. określaniu częstości występowania 
+form wyrazowych, konstrukcji składniowych lub kontekstów, w jakich pojawiają się dane wyrazy.
+
+#### Korpus NKJP
+Zawiera polską literature klasyczną, gazety, transkrypty konwersacji, różne teksty z internetu, itp.
 Istnieją dwie wyszukiwarki stworzone na jego bazie:
 
-#### IPI PAN
+* IPI PAN
 
-ttp://nkjp.pl/poliqarp/
+http://nkjp.pl/poliqarp/
+
+Używany między innymi do Morfeusza 2.
 
 [Ściągawka](http://nkjp.pl/poliqarp/help/pl.html) do używania korpusu. Znajdują się w niej między innymi zapytania o:
 - segmenty
@@ -409,40 +612,39 @@ ttp://nkjp.pl/poliqarp/
 - znaczniki morfosyntaktyczne
 - wieloznaczność i dezambiguacja
 
-####	PELCRA
+* PELCRA
 
-ile tego jest, do czego uzyto, czy jest przydatny
 http://www.nkjp.uni.lodz.pl/
 
-### Korpus opisanych obrazów z adnotacjami
+#### Korpus opisanych obrazów z adnotacjami
 
 http://zil.ipipan.waw.pl/Scwad/AIDe
 
-### Korpus dyskursu parlamentarnego
+#### Korpus dyskursu parlamentarnego
 
 ile tego jest, do czego uzyto, czy jest przydatny
 https://kdp.nlp.ipipan.waw.pl/query_corpus/
 
-## Word embeddings
+#### Korpus dla smenatyki kompozycyjnej dystrybucyjnej
 
-wziac z z daddasa 
-[Ewaluacja polskich embeddingów](https://github.com/Ermlab/polish-word-embeddings-review) stworzona przez wiele grup badawczych.
+Składa się z 10 tys. polskich par zdań, które są opisane przez człowieka pod kątem pokrewieństwa semantycznego.
 
-W powyższej implementacji została użyta biblioteka „gensim”, która pozwala wczytać dane, wytrenować model, oraz końcowo sprawdzić wyniki. Oprócz tworzenia wektorowych przedstawień słów biblioteka ma wiele innych funkcji, między innymi może znajdować semantycznie podobne dokumenty do tego który został jej zadany. Żeby określić word-embedinngi w powyższej implementacji używana jest funkcja "evaluation_word_pairs" oraz "assessment_word_analogies" z biblioteki gensim.
+http://zil.ipipan.waw.pl/Scwad/CDSCorpus
 
-Do testowania został użyty plik dostarczony przez [facebook fastext](https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.pl.300.vec.gz). Żeby określić podobieństwo słów użyto polskiej wersji [SimLex999](http://zil.ipipan.waw.pl/CoDeS?action=AttachFile&do=view&target=MSimLex999_Polish.zip), stworzonej przez IPIPAN.
+#### Korpus polskich recenzji 
 
-Obszerna tabelka z wynikami znajduje się w podanym w pierwszej linijce linku.
+ Korpus polskich recenzji opatrzonych opisami na poziomie całego tekstu oraz na 
+ poziomie zdań dla następujących dziedzin: hotele, medycyna, produkty i uniwersytet.
+
+https://clarin-pl.eu/dspace/handle/11321/700
+
+#### Korpus zawierający mowę nienawiści
+
+Składa się z ponad 2000 postów scrapowanych z około 2000 postów z mediów społecznościowych.
+
+http://zil.ipipan.waw.pl/HateSpeech
 
 
-## Zbiory danych
-
-zbiory ktore udostepnil gooogle
-
-
-[Zbiór](https://dl.fbaipublicfiles.com/fasttext/word-analogies/questions-words-pl.txt) zawiwerający pary słów a następnie skojarzone z nimi następne pary słów.
-
-[Zbiór](https://opus.nlpl.eu/OpenSubtitles-v2018.php) zawierający polskie napisy do filmów. Z dwóch źródeł się dowiedziałem, że zawiera sporo powtórzeń.
 
 ### Zbiory użyte do embeddingów
 
