@@ -140,14 +140,82 @@ tworzonymi społecznościowo danymi Morfologika/sjp.pl.
 ### Przykład użycia
 
 ##### GUI
-Morfeusz 2 zawiera [GUI](http://morfeusz.sgjp.pl/download/gui/) napisane w C++, które nie wymaga przykładu użycia.
+Morfeusz 2 zawiera [GUI](http://morfeusz.sgjp.pl/download/gui/) napisane w C++.
+
+![Zrzut ekranu](img.png) 
 
 ##### Użycie z poziomu C++
 [Dokumentacja](http://download.sgjp.pl/morfeusz/Morfeusz2.pdf) zawiera sześć stron (7-13) dokładnie opisanych kroków,
 które należy wykonać do użycia interesująych nas opcji.
 
+Przykład analizy z wektorem jako wynikiem:
+```cpp
+vector<MorphInterpretation> r;
+m->analyse("Załóż gąbkę na klawesyn.", r)
+```
+Przykład analizy w stylu iteratorowym:
+```cpp
+ResultsIterator *r=m->analyse("Załóż gąbkę na klawesyn.");
+while(r->hasNext()) {
+    MorphInterpretation i=r->next();
+        cout << i.startNode <<" "
+        << i.endNode <<" "
+        << i.orth <<" "
+        << i.lemma <<" "
+        << i.getTag(*morfeusz) <<" "
+        << i.getName(*morfeusz) <<" "
+        << i.getLabelsAsString(*morfeusz)
+        << endl;
+}
+```
 
+### Morfeusz w języku Python
 
+Interfejs języka Python różni się nieco od interfejsu C++ ze względu na
+własności języka i przyjęte w środowisku pythonowym obyczaje.
+Użycie Morfeusza wymaga zaimportowania w programie biblioteki i stworzenia obiektu reprezentującego Morfeusza: morfeusz2:
+
+```python
+import morfeusz2
+morf = morfeusz2.Morfeusz()
+```
+Obiekt utworzony bez podawania parametrów konstruktora będzie używał domyślnego słownika SGJP i 
+domyślnych ustawień opcji.
+
+Dwie najważniejsze metody klasy Morfeusz to analyse oraz generate.
+Pierwsza z nich zwraca graf analizy morfoskładniowej dla podanego napisu
+w postaci listy trójek uporządkowanych reprezentujących pojedyncze interpretacje poszczególnych segmentów (czyli krawędzie w grafie analizy). Każda
+trójka składa się z indeksów węzła początkowego i końcowego danej krawędzi
+oraz z interpretacji morfoskładniowej, stanowiącej etykietę krawędzi. Interpretacja to piątka uporządkowana zawierająca:
+* formę tekstową,
+* lemat (formę bazową/hasłową),
+* znacznik morfoskładniowy,
+* listę informacji o „pospolitości” rzeczownika (np. nazwa pospolita, marka,
+nazwisko),
+8 listę kwalifikatorów stylistycznych (np. daw., pot., środ., wulg.) i dziedzinowych (np. bot., zool.).
+
+Segmenty nieznane słownikowi otrzymują specjalny znacznik ign oraz lemat
+równy formie tekstowej.
+
+```python
+for text in (u'Jaś miał kota', u'Coś zrobił?', u'qwerty'):
+print(text)
+analysis = morf.analyse(text)
+for interpretation in analysis:
+print(interpretation)
+```
+
+Metoda generate zwraca listę interpretacji morfoskładniowych (w postaci
+piątek, jw.) wszystkich form, dla których podany tekst stanowi formę bazową:
+```python
+morf.generate(u'piec')
+```
+W odróżnieniu od analyse, generate akceptuje tylko napisy stanowiące pojedyncze słowo (bez spacji), w przeciwnym
+przypadku zostanie zgłoszony wyjątek.
+
+Więcej informacji apropo używania morfeusza w pythonie znajduje się w [dokumentacji morfeusza](http://download.sgjp.pl/morfeusz/Morfeusz2.pdf)
+na stronach
+14-16.
 
 ## Tokenizacja 
 
@@ -195,6 +263,20 @@ Model propabilistyczny, którego celem jest obliczenie prawdopodobieństwa wyst�
 Na samym początku wspomnę o rankingu klej - który jest polskim odpowiednikiem angielskiego rankingu GLUE. Został stworzony przez Allegro, i określa ranking najlepszych modeli językowych dla językach polskiego. Rankking możemy znaleźć o [tutaj](https://klejbenchmark.com/leaderboard/)
 
 Do tej pory pionierem do spraw języka naturalnego w wielu językach był googlowski BERT, jednak w klasyfikacji GLUE dostał tylko 80 na 100 punktów. Na podstawie BERT’a powstał Polski RoBERT, który osiągnął 87/100 punktów w teście KLEJ, a jeszcze potem na podstawie RoBERTA powstał HerBERT, osiągając najwyższą do tej pory notę 88/100.
+
+
+### Hugging Transformers
+
+[Strona HuggingTransformers](https://huggingface.co/models?sort=downloads) zawiera ogromną ilość modeli
+do zagadnień takich jak postrzeganie obrazów przez maszyny, NLP, rozpoznawania mowy i dźwięku, itp.
+
+Oto lista zagadnień:
+
+![lista zagadnien](https://imgur.com/a/xC7DUNq)
+
+Po wybraniu interesującego nas tagu dostajemy listę modeli dostępnych na stronie:
+
+![wybranie taga](https://imgur.com/a/28fBnP0)
 
 ### BERT
 
@@ -254,7 +336,11 @@ Wyniki obydwu wariantów w rankingu KLEJ:
 
 Model stworzony przez Ośrodek Przetwarzania Informacji na podstawie BERTa. Powstały dwa modele, large i base, z czego large został wytrenowany na około 130GB danych, a do mniejszy na 20GB - wśród korpusy znajdowały się wysokiej jakości teksty z wikipedii, dokumenty polskiego parlamentu, wypowiedzi z mediów społecznościowych, książki, artykuły, oraz dłuższe formy pisane. Z obu można korzystać w zależności od potrzeb i możliwości technicznych. Pierwszy oferuje większą precyzje ale zarazem wymaga większej mocy obliczeniowej, gdzie drugi jest szybszy lecz ofertuje nieco gorsze wyniki.
 
-Modele zostały wytrenowane na dwa sposoby, korzystając z toolkitu [fairseq](https://github.com/pytorch/fairseq) i [Huggingface Transformers](https://github.com/huggingface/transformers). Fairseq służy do modelowania sekwencyjnego i pozwala trenenować nieszablonowe modele do tłumaczeń, modeli językowych, uogalniania oraz innych zadań związanych z tekstem, gdzie Huggingface dostarcza tysiące pre-trained modeli do zadań dotyczących tekstu, obrazów, oraz audio.
+Modele zostały wytrenowane na dwa sposoby, korzystając z toolkitu [fairseq](https://github.com/pytorch/fairseq) 
+i [Huggingface Transformers](https://github.com/huggingface/transformers). Fairseq służy do
+modelowania sekwencyjnego i pozwala trenenować nieszablonowe modele do tłumaczeń, modeli 
+językowych, uogalniania oraz innych zadań związanych z tekstem, gdzie Huggingface dostarcza 
+tysiące pre-trained modeli do zadań dotyczących tekstu, obrazów, oraz audio.
 
 
 <table>
@@ -488,6 +574,7 @@ if __name__ == '__main__':
     
 # [('cyrankiewicz', 0.818274736404419), ('gomułka', 0.7967918515205383), ('raczkiewicz', 0.7757788896560669), ('jaruzelski', 0.7737460732460022), ('pużak', 0.7667238712310791)]
 ```
+Prezentacja dotycząca Word2Vec znajduje się o [tutaj](Prezentacja dotycząca Word2Vec znajduje się o [tutaj](http://compling.hss.ntu.edu.sg/courses/hg7017/pdf/word2vec%20and%20its%20application%20to%20wsd.pdf).
 
 #### FastText
 
@@ -583,23 +670,41 @@ Więcej informacji o word embeddingach możemy znaleźć o [tutaj](https://githu
 
 ## Zbiory danych
 
-[Github](https://github.com/Ermlab/pl-sentiment-analysis) zawierający zbiór Opineo - recenzje ze sklepów online.
+[Zbiór](https://opus.nlpl.eu/OpenSubtitles-v2018.php) zawierający między innymi polskie napisy do filmów. Z dwóch źródeł się dowiedziałem, że zawiera sporo powtórzeń.
 
-[Zbiór](https://dl.fbaipublicfiles.com/fasttext/word-analogies/questions-words-pl.txt) zawiwerający pary słów a następnie skojarzone z nimi następne pary słów.
-
-[Zbiór](https://opus.nlpl.eu/OpenSubtitles-v2018.php) zawierający polskie napisy do filmów. Z dwóch źródeł się dowiedziałem, że zawiera sporo powtórzeń.
-
+```text
+The Loner You love curry, right? I'll give you more. Hey! Is it good? Hey, ugly. Look at her. - Craz...
+```
 [Zbiór](https://dl.fbaipublicfiles.com/fasttext/word-analogies/questions-words-pl.txt) zawierjający analogie ("Ateny Grecja Bagdad Irak")
 , przydatny do word embedinggsów.
+
+```text
+Ateny Grecja Ottawa Kanada
+Ateny Grecja ParyĹź Francja
+Ateny Grecja Rzym WĹochy
+Ateny Grecja Sztokholm Szwecja
+Ateny Grecja Teheran Iran
+Ateny Grecja Tokio Japonia
+Bagdad Irak Ateny Grecja
+Bagdad Irak Bangkok Tajlandia
+Bagdad Irak Pekin Chiny
+Bagdad Irak Berlin Niemcy
+Bagdad Irak Berno Szwajcaria
+Bagdad Irak Kair Egipt
+```
 ### Korpusy językowe
 
 Korpus językowy to zbiór tekstów służących badaniom lingwistycznym, np. określaniu częstości występowania 
 form wyrazowych, konstrukcji składniowych lub kontekstów, w jakich pojawiają się dane wyrazy.
 
 #### Korpus NKJP
-Zawiera polską literature klasyczną, gazety, transkrypty konwersacji, różne teksty z internetu, itp.
-Istnieją dwie wyszukiwarki stworzone na jego bazie:
+Narodowy Korpus Języka Polskiego jest wspólną inicjatywą Instytutu Podstaw Informatyki PAN (koordynator), Instytutu Języka Polskiego PAN, Wydawnictwa Naukowego PWN oraz Zakładu Językoznawstwa Komputerowego i Korpusowego Uniwersytetu Łódzkiego, zrealizowaną jako projekt badawczy rozwojowy Ministerstwa Nauki i Szkolnictwa Wyższego.
 
+Te cztery instytucje wspólnie zbudowały korpus referencyjny polszczyzny wielkości ponad półtora miliarda słów. Wyszukiwarki korpusowe pozwalają przeszukiwać zasoby NKJP zaawansowanymi narzędziami uwzględniającymi odmianę polskich wyrazów, a nawet analizującymi budowę polskich zdań.
+
+Lista źródeł korpusu zawiera nie tylko klasykę literatury polskiej, ale też prasę codzienną i specjalistyczną, nagrania rozmów, teksty ulotne i internetowe. Zróżnicowanie tematyczne i gatunkowe tekstów, dbałość o reprezentację rozmówców obu płci, w różnym wieku i z różnych regionów, są dla wiarygodności korpusu równie ważne jak jego wielkość.
+
+Na podstawie korpusu powstały dwie wyszukiwarki:
 * IPI PAN
 
 http://nkjp.pl/poliqarp/
@@ -607,62 +712,331 @@ http://nkjp.pl/poliqarp/
 Używany między innymi do Morfeusza 2.
 
 [Ściągawka](http://nkjp.pl/poliqarp/help/pl.html) do używania korpusu. Znajdują się w niej między innymi zapytania o:
-- segmenty
-- formy podstawowe
-- znaczniki morfosyntaktyczne
-- wieloznaczność i dezambiguacja
+* 
+  * segmenty
+  * formy podstawowe
+  * znaczniki morfosyntaktyczne
+  * wieloznaczność i dezambiguacja
 
-* PELCRA
 
-http://www.nkjp.uni.lodz.pl/
 
-#### Korpus opisanych obrazów z adnotacjami
+* [PELCRA](http://www.nkjp.uni.lodz.pl/)
 
-http://zil.ipipan.waw.pl/Scwad/AIDe
+Wyszukiwarka korpusowa PELCRA dla danych NKJP powstała w ramach projektu Narodowy Korpus Języka Polskiego. 
+Umożliwia ona przeszukiwanie zrównoważonej wersji korpusu (ponad 250 milionów słów tekstowych, czyli ok. 
+300 milionów segmentów) oraz całej puli danych NKJP (ok. 1500 milionów słów tekstowych, czyli ok. 1800 
+milionów segmentów) zebranych w ramach projektu.
 
-#### Korpus dyskursu parlamentarnego
+Wyszukiwarkę PELCRA cechuje łatwość użycia oraz szybkość zwracania nawet bardzo dużych zbiorów wyników, 
+które można także pobierać w postaci arkuszy kalkulacyjnych. Specjalna składnia zapytań umożliwia też 
+stosowanie rozszerzeń morfologicznych oraz ortograficznych, wyszukiwanie w jednym zapytaniu wariantów 
+leksykalnych i elastycznych związków frazeologicznych.
 
-ile tego jest, do czego uzyto, czy jest przydatny
-https://kdp.nlp.ipipan.waw.pl/query_corpus/
 
-#### Korpus dla smenatyki kompozycyjnej dystrybucyjnej
+#### [Korpus opisanych obrazów z adnotacjami](http://zil.ipipan.waw.pl/Scwad/AIDe)
+
+AIDe jest korpusem opisów obrazów w języku polskim. Składa się on z 2 tys. opisów w języku naturalnym do 
+1 tys. obrazów. Opisy są analizowane morfosyntaktycznie (znakowanie części mowy i parsowanie zależności),
+a pary tych opisów są adnotowane pod względem pokrewieństwa semantycznego i entailmentu. Wszystkie adnotacje 
+zostały przygotowane przez osoby o dużym doświadczeniu językowym.
+
+Zbiór danych może być wykorzystany do oceny różnych systemów integrujących język i wizję. Nadaje się 
+do oceny systemów przeznaczonych do generowania obrazów na podstawie dostarczonych opisów (generowanie 
+tekstu do obrazu) lub do generowania podpisów na podstawie obrazów (generowanie obrazu do tekstu). 
+Ponadto, ponieważ wybrane obrazy są podzielone na grupy tematyczne w oparciu o WordNet, zbiór danych 
+jest również przydatny do walidacji metod klasyfikacji obrazów.
+
+
+
+#### [Korpus dyskursu parlamentarnego](https://kdp.nlp.ipipan.waw.pl/query_corpus/)
+
+Korpus Dyskursu Parlamentarnego jest zbiorem anotowanych lingwistycznie tekstów z posiedzeń plenarnych Sejmu 
+i Senatu RP, interpelacji i zapytań poselskich oraz posiedzeń komisji od roku 1919 do chwili obecnej 
+(są stale uzupełniane materiałami z kolejnych posiedzeń). Teksty opisane metadanymi oraz przetworzone 
+automatycznie narzędziami lingwistycznymi (do segmentacji, analizy morfoskładniowej, rozpoznawania 
+grup składniowych i nazw własnych) są dostępne do przeszukiwania oraz pobrania.
+
+
+
+#### [Korpus dla smenatyki kompozycyjnej dystrybucyjnej](http://zil.ipipan.waw.pl/Scwad/CDSCorpus)
 
 Składa się z 10 tys. polskich par zdań, które są opisane przez człowieka pod kątem pokrewieństwa semantycznego.
+Zbiór danych może być wykorzystany do ewaluacji modeli kompozycyjnej semantyki dystrybucyjnej języka polskiego.
 
-http://zil.ipipan.waw.pl/Scwad/CDSCorpus
 
-#### Korpus polskich recenzji 
 
- Korpus polskich recenzji opatrzonych opisami na poziomie całego tekstu oraz na 
- poziomie zdań dla następujących dziedzin: hotele, medycyna, produkty i uniwersytet.
+#### [Korpus polskich recenzji ](https://clarin-pl.eu/dspace/handle/11321/700)
 
-https://clarin-pl.eu/dspace/handle/11321/700
+Wrocławski Korpus Recenzji Konsumenckich jest korpusem polskich recenzji opatrzonych anotacją sentymentu na 
+poziomie całego tekstu (*tekst*) oraz na poziomie zdań (*zdanie*) dla następujących dziedzin: hotele, medycyna, 
+produkty i uczelnie (recenzje*). Zdania są opatrzone anotacją sentymentu tylko dla hoteli i medycyny. 
+Każdy plik *sentence* zawiera pojedyncze zdanie z etykietą sentymentu __label__z_X, a każdy plik *text* 
+zawiera pojedynczą recenzję z etykietą sentymentu __label__meta_X. 
 
-#### Korpus zawierający mowę nienawiści
 
-Składa się z ponad 2000 postów scrapowanych z około 2000 postów z mediów społecznościowych.
 
-http://zil.ipipan.waw.pl/HateSpeech
+#### [Korpus zawierający mowę nienawiści](http://zil.ipipan.waw.pl/HateSpeech)
+
+Składa się z ponad 2000 postów scrapowanych z około 2000 postów z mediów społecznościowych. Pliki z rozszerzeniem
+frm, MYI, MYD.
+
+
 
 
 
 ### Zbiory użyte do embeddingów
 
 - https://clarin-pl.eu/dspace/handle/11321/442
+
+Dystrybucyjny model języka wytrenowany na różnych korpusach językowych (KGR10, NKJP, Wikipedia).
+
 - https://clarin-pl.eu/dspace/handle/11321/606
+
+Dystrybucyjny model języka (tekstowy i binarny) dla języka polskiego (word embeddings) wytrenowany na korpusie KGR10 (ponad 4 miliardy słów) przy użyciu Fasttext w następujących wariantach (wszystkie możliwe kombinacje):
+
+wymiar: 100, 300m, metoda: skipgram, cbow, narzędzie: FastText, Magnitude, tekst źródłowy: plain, plain.lower, plain.lemma, plain.lemma.lower
+
+
+
 - https://clarin-pl.eu/dspace/handle/11321/600
+
+Dystrybucyjny model języka (binarny) dla języka polskiego wytrenowany na KGR10 przy użyciu Fasttext (wymiar wektora: 100).
 - https://clarin-pl.eu/dspace/handle/11321/327
-- http://vectors.nlpl.eu/repository 
-- https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.pl.300.bin.gz
+
+Model skip gram z wektorami o długości 100. Trenowany na kgr 10, korpusie zawierającym ponad 
+4 miliardy tokenów. Wstępne przetwarzanie danych obejmuje segmentację, lematyzację i dezambiguację 
+mofosyntaktyczną z adnotacją MWE.
+- http://vectors.nlpl.eu/repository -
+6 polskich modeli:
+  * Polish CommonCrawl Dump of December 2019, 35193029 słów, algorytm Gensim Continuous Skipgram 
+  * Polish CommonCrawl Dump of December 2019, 35193029 słów, algorytm Gensim Continuous Bag-of-Words
+  * Polish CommonCrawl Dump of December 2019, 4885806 słów, algorytm fastText Skipgram
+  * Polish CommonCrawl Dump of December 2019, 4885806 słów, algorytm	fastText Continuous Bag-of-Words
+  * Polish CoNLL17 corpus, algorytm Embeddings from Language Models (ELMo)
+  * Polish CoNLL17 corpus, 4420598 słow, algorytm Word2Vec Continuous Skipgram
 
 ### Zbiory użyte do HerBERTa
 - https://huggingface.co/datasets/allegro/klej-psc
+
+extract_text
+```text
+Prywatna spółka KrzysztofaToeplitza od siedmiu lat wynajmuje atrakcyjną kamienicę na Starym Mieście. 
+wątpliwości budzi umowa najmu. traci na niej skarb państwa. 1994 roku dyrektor ODZ, podpisał umowę najmu 
+kamienicy z Towarzystwem Wydawniczym i Literackim. Pierwotna umowa została zmieniona. powiększano wynajmowaną 
+powierzchnię. Wydłużono też okres wynajmu. W umowie nie uwzględniono jednak możliwości podniesienia czynszu.
+```
+summary_text
+```text
+W piątek w wielu uczelniach odbyły się uroczyste inauguracje roku akademickiego. Niestety, szybciej 
+przybywa studentów niż środków na pomoc materialną w budżecie państwa. Tę sytuację tylko trochę łagodzą 
+wprowadzone w ubiegłym roku preferencyjne kredyty. Zdecydowanie brakuje też miejsc w akademikach. Uczelnie 
+państwowe coraz silniej odczuwają konieczność wprowadzenia odpłatności za studia. Jeżeli rząd nie przeznaczy 
+na uczelnie wystarczających kwot w budżecie, to niezbędne będzie wprowadzenie częściowej odpłatności także za 
+studia dzienne.
+```
+label
+```text
+0
+```
 - https://huggingface.co/datasets/allegro/klej-dyk
+
+question
+```text
+z jakiego powodu zwołano synod w Whitby?
+```
+
+answer
+```text
+Wśród mnichów i mniszek mieszkających w Whitby, znajduje się wiele osób czczonych jako święte: św. Hilda - 
+pochodząca z dynastii rządzącej Northumbrią, pierwsza ksieni opactwa; św. Edwin - król Northumbrii; św. 
+Cedmon z Whitby - poeta; św. Bergu - mniszka i dziewica, miała wizję duszy św. Hildy w dniu jej śmierci; 
+św. Trumwin - biskup Abercorn, schronił się w Whitby przed prześladowaniem; św. Elfleda - córka Oswiu, 
+przysłana do klasztoru po jego klęsce w bitwie z Pendą z Mercji św. Bosa - biskup Yorku; św. Wilfrid - 
+biskup Yorku; św. Enfleda - córka św. Edwina i żona św. Oswiu
+```
+
+target
+```text
+0
+```
 - https://huggingface.co/datasets/allegro/klej-polemo2-in
+
+sentence
+```text
+Super lekarz i człowiek przez duże C . Bardzo duże doświadczenie i trafne diagnozy . Wielka cierpliwość do ludzi 
+starszych . Od lat opiekuje się moją Mamą staruszką , i twierdzę , że mamy duże szczęście , że mamy takiego 
+lekarza . Naprawdę nie wiem cobyśmy zrobili , gdyby nie Pan doktor . Dzięki temu , moja mama żyje . Każda wizyta 
+u specjalisty jest u niego konsultowana i uważam , że jest lepszy od każdego z nich . Mamy do Niego prawie 
+nieograniczone zaufanie . Można wiele dobrego o Panu doktorze jeszcze napisać . Niestety , ma bardzo dużo 
+pacjentów , jest przepracowany ( z tego powodu nawet obawiam się o jego zdrowie ) i dostęp do niego jest 
+trudny , ale zawsze możliwy .
+```
+target
+```text
+__label__meta_plus_m
+```
 - https://huggingface.co/datasets/allegro/klej-cdsc-e
+
+sentence A
+```text
+Chłopiec w czerwonych trampkach skacze wysoko do góry nieopodal fontanny .
+```
+
+sentence B 
+```text
+Chłopiec w bluzce w paski podskakuje wysoko obok brązowej fontanny .
+```
+entailment_judgment
+```text
+NEUTRAL
+```
 - https://huggingface.co/datasets/allegro/klej-allegro-reviews
+
+sentence 
+```text
+Jako do ceny dobra. Przyssawka mogłaby być lepsza. Po 2 miesiącach użytkowania musiałem nóżkę z przyssawką
+rozkręcić i przyssawkę podkleić bo guma zaczęła pękać od strony mocowania do uchwytu (uchwyt zaczął się po 
+prostu trząść bo zrobił się luz). Mechanizm mocowania telefonu póki co (3 miesiące użytkowania) działa bez zarzutu.
+```
+target 
+```text
+3
+```
 - https://huggingface.co/datasets/allegro/klej-polemo2-out
+
+sentence
+```text
+Super lekarz i człowiek przez duże C . Bardzo duże doświadczenie i trafne diagnozy . Wielka cierpliwość do 
+ludzi starszych . Od lat opiekuje się moją Mamą staruszką , i twierdzę , że mamy duże szczęście , że mamy 
+takiego lekarza . Naprawdę nie wiem cobyśmy zrobili , gdyby nie Pan doktor . Dzięki temu , moja mama żyje . 
+Każda wizyta u specjalisty jest u niego konsultowana i uważam , że jest lepszy od każdego z nich . Mamy do 
+Niego prawie nieograniczone zaufanie . Można wiele dobrego o Panu doktorze jeszcze napisać . Niestety , ma 
+bardzo dużo pacjentów , jest przepracowany ( z tego powodu nawet obawiam się o jego zdrowie ) i dostęp do 
+niego jest trudny , ale zawsze możliwy .
+```
+
+target
+```text
+__label__meta_plus_m
+```
 - https://huggingface.co/datasets/allegro/klej-nkjp-ner
+
+sentence 
+```text
+- Widzi pani , a Blokowa wzięła i się nie zastanawiała , i ma , i może robić , co chce .
+```
+
+target 
+```text
+noEntity
+```
 - https://huggingface.co/datasets/allegro/klej-cdsc-r
+
+sentence A
+```text
+Chłopiec w czerwonych trampkach skacze wysoko do góry nieopodal fontanny .
+```
+sentence B
+```text
+Chłopiec w bluzce w paski podskakuje wysoko obok brązowej fontanny .
+```
+relatedness_score 
+```text
+3
+```
 - https://huggingface.co/datasets/allegro/klej-cbd
+
+sentence
+```text
+@anonymized_account Dawno kogoś tak wrednego nie widziałam xd
+```
+
+target
+```text
+0
+```
 - https://huggingface.co/datasets/allegro/summarization-polish-summaries-corpus
+```text
+PODRĘCZNIKI We wrześniu wielu książek będzie brakować - twierdzą wydawcy Walka o ucznia ŁUKASZ GOŁĘBIEWSKI 
+Wprowadzona od września tego roku reforma oświaty przewiduje konieczność wymiany wszystkich podręczników do 
+IV klasy szkoły podstawowej i wydrukowania nowych książek do pierwszej klasy gimnazjum, która zastąpi siódmą
+klasę podstawówki. W połowie czerwca nawet połowa nowych podręczników nie została jeszcze wydrukowana i
+już dziś wiadomo, że we wrześniu wielu książek będzie brakować. W poprzednich latach wydawcy rozpoczynali
+druk podręczników w marcu. Od czerwca zaczynał się sezon ich sprzedaży, którego kulminacja przypadała 
+na koniec września. W tym roku w czerwcu sprzedaż książek szkolnych była o 80-90 proc. mniejsza, 
+niż w latach ubiegłych. Nauczyciele nie wiedzą, jakie podręczniki polecać na następny rok, wydawcy 
+czekają z drukiem na akceptację resortu edukacji, a Ministerstwo Edukacji Narodowej do 12 lipca wydłużyło
+termin składania wniosków o wpis do rejestru książek dopuszczonych do nauki w szkołach. Bogata oferta 
+- Wykaz książek zatwierdzonych przez MEN będzie dopiero pod koniec sierpnia - mówi Danuta Mieszkowska
+z departamentu kształcenia i wychowania MEN. - Wydłużyliśmy okres składania wniosków o wpis do rejestru
+na prośbę samych wydawców. Dotychczas wpłynęło ponad sto wniosków. Z naszego rozeznania wynika, że do
+każdego przedmiotu w klasach objętych reformą będą co najmniej dwa podręczniki. Z naszej ankiety 
+przeprowadzonej wśród wydawców książek szkolnych wynika, że będzie tych podręczników więcej: 3-4,
+a do niektórych przedmiotów nawet 6. Razem z zeszytami ćwiczeń, które nie wymagają aprobaty MEN, 
+w tym roku pojawi się ok. 400 nowych tytułów adresowanych do uczniów klas objętych reformą oraz 
+klas I-III (tu nie ma konieczności wymiany książki, jednak wielu wydawców przygotowało na ten rok 
+nowoczesne zintegrowane podręczniki). Wydawnictwa Szkolne i Pedagogiczne - potentat na tym rynku - szykują
+nowe podręczniki do wszystkich zreformowanych klas, jednak nie wszystkie są już wydrukowane. - Najgorsza jest
+niewiedza - mówi Iwona Ring, dyrektor ds. promocji w wydawnictwie. - Nie wiemy, czy wszystkie nasze 
+podręczniki uzyskają akceptację MEN. Wielką niewiadomą są nakłady. Trudno przewidzieć, jak będą się sprzedawały 
+nowe tytuły. Postanowiliśmy zaryzykować i będziemy drukować więcej, niż sprzedawaliśmy w latach ubiegłych. 
+Dzięki temu we wrześniu będzie dużo naszych książek. Jeśli się nie sprzedadzą - albo pójdą na przemiał, albo
+będą czekały na następny rok. Inni wydawcy są jednak ostrożniejsi niż WSiP. - Nie chcemy ryzykować i na 
+początek drukujemy po 50 tys. każdego tytułu - mówi Piotr Oziębło, dyrektor wydawnictwa Juka-91. - Liczymy
+, że sprzedamy trzy razy więcej, ale nie chcemy ponosić strat. - Pierwszy nakład każdego z naszych nowych 
+podręczników to 60 tys. egzemplarzy - mówi Tomasz Gigol z Nowej Ery. - Nie ryzykujemy i z drukiem czekamy 
+na akceptację książek przez MEN. W oczekiwaniu na kolejki Pod koniec sierpnia odbędzie się w Pałacu 
+i Nauki w Warszawie specjalna edycja Targów Książki Edukacyjnej. Wszystko w związku z reformą oświaty i 
+panującym na rynku zamieszaniem, które spowodowało, że w wielu szkołach uczniowie dowiedzą się dopiero we
+wrześniu, z jakich książek mają się uczyć. Najgorzej, że nawet do klas, które nie są objęte reformą, 
+sprzedaż książek bardzo spadła. - Ponieważ teraz rodzice nie kupują książek, należy oczekiwać, że we 
+wrześniu, a nawet jeszcze w październiku, przed księgarniami będą ustawiały się kolejki - twierdzi 
+Grzegorz Bartosiewicz, szef największej hurtowni książek szkolnych - Wkra. - Wielu tytułów we wrześniu 
+zabraknie, bo wydawcy ostrożniej niż kiedykolwiek planują nakłady. Oznacza to, że w krótkim czasie do 
+hurtowni wpłynie dużo tytułów, które stale trzeba będzie uzupełniać. W razie potrzeby, wprowadzę w swojej 
+firmie pod koniec sierpnia 24-godzinny dzień pracy i przyjmę nowych pracowników. - Z całą pewnością we 
+wrześniu będzie brakowało podręczników. Nauczyciele są zdezorientowani, wydawcy też. Ten rok dla wszystkich 
+jest wielkim doświadczeniem - twierdzi Olgierd Buchocki, szef Gdańskiego Wydawnictwa Oświatowego. - To, co 
+sprzedawano w pięć miesięcy, będzie trzeba sprzedać w 30 dni. Księgarze nie dadzą sobie z tym rady - uważa 
+Marek Rożak, właściciel wydawnictwa edukacyjnego M. Rożak. Nowe firmy Reforma jest dla wydawcy wyzwaniem, 
+ale i ogromną szansą. Na rynku edukacyjnym są największe nakłady książek i najszybszy przepływ gotówki. 
+Wypromowanie nawet jednego podręcznika może oznaczać wzrost obrotów o kilkaset tysięcy złotych. Dlatego 
+wydawcy od kilku miesięcy spotykają się z nauczycielami, wysyłają do szkół gratisowe egzemplarze książek, 
+organizują konferencje metodyczne. - Nasze koszty na promocję w tym roku wzrosły kilkakrotnie - twierdzi 
+Tomasz Gigol z Nowej Ery. - Zazwyczaj wysyłaliśmy nasze materiały do szkół raz w roku, a teraz, do czerwca, 
+zrobiliśmy to już pięć razy (w tym 135 tys. egz. bezpłatnych książek). W tym roku o ucznia walczyć będzie 
+wiele nowych na tym rynku firm: Znak, Prószyński i S-ka, Muza, LektorKlett. Reforma otwiera nowe możliwości. 
+Wiadomo, że nauczyciele niechętnie zmieniają podręczniki, z których uczą. Teraz będą musieli. Ceny wzrosną 
+Wydawnictwa Szkolne i Pedagogiczne przygotowały w tym roku 114 nowych podręczników, z czego dopiero połowa 
+została wydrukowana. Wydawnictwo M. Rożak szykuje nowy podręcznik do przyrody (nowy przedmiot, który pojawi 
+się w klasie IV) oraz historię, polski, geografię i biologię do gimnazjum. Gdańskie Wydawnictwo Oświatowe 
+będzie miało nowe podręczniki do polskiego, historii i matematyki. Nowa Era szykuje książkę do przyrody oraz 
+podręczniki do gimnazjum: biologię, chemię, fizykę, geografię, matematykę, technikę. Juka-91 drukuje nowy 
+zintegrowany elementarz, podręcznik do przyrody i matematyki dla klas IV i historię dla gimnazjum. Res Polona 
+będzie miała nową matematykę dla klas IV-VI i dla gimnazjum, fizykę dla gimnazjum i zintegrowany podręcznik 
+do nauczania w klasach I-III. Zintegrowany podręcznik do nauczania początkowego szykuje też Didasko. Osiem 
+nowych podręczników wyda oficyna Adam. Szesnaście nowych tytułów szykuje poznańska Arka... Wyliczać można d
+ługo, bo w Polsce działa blisko 200 wydawnictw specjalizujących się w książce oświatowej. Ceny podręczników 
+nieznacznie wzrosną - o ok. 10 proc. w porównaniu z rokiem ubiegłym (przykładowe ceny podajemy w tabelce). 
+Pojedyncza książka kosztuje dziś w detalu ok. 13-21 złotych, zeszyt ćwiczeń 4-12 złotych. Co roku rodzice 
+muszą jednak wydać od 100 do 200 złotych na podręczniki, co dla wielu domowych budżetów jest sporym obciążeniem. 
+Ceny książek szkolnych nie różnią się znacznie, konkurencja powoduje, że wydawcy nie mają zbyt dużych możliwości 
+ani podnoszenia, ani obniżania cen. Wiele zależy tu od Wydawnictw Szkolnych i Pedagogicznych, do których 
+polityki cenowej dostosowują się mniejsi edytorzy. W ostatnich latach WSiP stosunkowo drogo sprzedawał książki 
+osiągając co roku ogromne zyski. Urok ćwiczeń Nauczyciel będzie miał w czym wybierać. A nowe podręczniki 
+kuszą kredowym papierem, pięknymi ilustracjami, bogatym zestawem ćwiczeń. W niczym nie przypominają tych,
+z których uczyły się poprzednie pokolenia. Edytorsko są to obecnie jedne z najpiękniejszych książek 
+na polskim rynku. Także tekst uległ przeobrażeniom. Nowe podręczniki mają uczyć samodzielnego myślenia, 
+dlatego ich autorzy dbają o to, by uczeń utrwalał wiedzę dzięki licznym przykładom i ćwiczeniom, wykład 
+zaś ograniczony jest do minimum tłumaczącego definicje i pojęcia. Liczne wykresy i ilustracje przemawiają 
+do wyobraźni ucznia i ułatwiają szybkie zrozumienie tematu lekcji. Poziom podręczników jest wyrównany, 
+tu wchodzą w grę zbyt duże pieniądze, by któryś wydawca mógł sobie pozwolić na wypuszczenie bubla.
+```
+target
+```text
+Krajowy Sąd Partyjny SLD wykluczył z partii byłą przewodniczącą dębickiego Sojuszu Marię Mazur i skarbnika
+ Zbigniewa Kozioła za "postawę niegodną członka partii". Wykluczeni twierdzą, że stali się niewygodni. 
+ Utrzymują, że nie chcieli tuszować matactw i zadarli z posłem Wiesławem Ciesielskim, szefem SLD w 
+ Podkarpackiem, a od niedawna wiceministrem finansów, oraz ze Stanisławem Janasem, wiceprzewodniczącym 
+ Rady Krajowej SLD. Zdaniem Kazimierza Jesionka oboje notorycznie łamali kartę zadas etycznych.
+```
