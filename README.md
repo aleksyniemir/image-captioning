@@ -2,7 +2,7 @@
 
 Na tym githubie znajduje się opis wybranych zagadnień używanych w image captioning do języka polskiego. 
 W opis wchodzą takie rzeczy jak sposób korzystania, teoretyczny opis, jak się korzysta, 
-w jakich artykułach zostały opublikowane, itp. 
+w jakich artykułach zostały opublikowane, i tym podobne. 
 
 Lista zagadnień:
 - stemming
@@ -18,10 +18,10 @@ Lista zagadnień:
 ## Stemming
 
 Stemming to inaczej proces wyciągnięcia rdzenia ze słowa (części, która jest odporna na odmiany 
-przez przyimki, rodzaje, itp). 
+przez przyimki, rodzaje, i tym podobne). 
 
 ### NTLK
-NLTK zawiera dużo bibliotek wykonujących stemming na wiele sposobów jak i narzędzia wykonujące
+NLTK zawiera dużo bibliotek wykonujących stemming na wiele sposobów, jak i narzędzia wykonujące
 inne funkcje. 
 Jest to platforma, która tworzy aplikacje opierające się o dane dotyczące ludzkiego języka.
 Udostępnia łatwe w użyciu interfejsy do ponad 50 korpusów i zasobów leksykalnych, takich jak WordNet,
@@ -29,16 +29,16 @@ wraz z zestawieniem bibliotek do przetwarzania tekstu do klasyfikacji, tokenizac
 tagowania, parsowania, wnioskowania semantycznego oraz wrapperami do bibliotek NLP o znaczeniu przemysłowym.
 
 NLTK dostarcza wiele implementacji różnych algorytmów, między innymi:
-* arlstem - do języka Arabskiego
-* cistem - do języka Niemieckiego
-* isri - do języka Arabskiego
-* rslp - do języka Portugalskiego
+* arlstem - do języka arabskiego
+* cistem - do języka niemieckiego
+* isri - do języka arabskiego
+* rslp - do języka portugalskiego
 * snowball - obsługuje parenaście języków, niestety bez języka polskiego
 * lancester - oparty na algorytmie Lancestera
 * porter - oparty na algorytmie Portera
 
 Dla przykładu sposób działania stemmera Regexp, który używa wyrażeń regularnych do identyfikacji 
-afiksów morfologicznych i usuwa wszystkie podłańcuchy pasujące do wyrażeń regularnych:
+afiksów morfologicznych i usuwa wszystkie pod łańcuchy pasujące do wyrażeń regularnych:
 ```python
 >>> from nltk.stem import RegexpStemmer
 >>> st = RegexpStemmer('ing$|s$|e$|able$', min=4)
@@ -56,10 +56,10 @@ afiksów morfologicznych i usuwa wszystkie podłańcuchy pasujące do wyrażeń 
 'advis'
 ```
 
-Więcej informacji apropo każdego z wymienionych stemmerów znajduje się [tutaj](https://www.nltk.org/api/nltk.stem.html).
+Więcej informacji dotyczących każdego z wymienionych stemmerów znajduje się [tutaj](https://www.nltk.org/api/nltk.stem.html).
 
 ### Stempel
-Jeśli chodzi specyficznie o język polski z pomocą przychodzi Stempel - stemmer początkowo 
+Jeśli chodzi specyficznie o język polski, z pomocą przychodzi Stempel - stemmer początkowo 
 napisany w javie. Został stworzony w projekcie [Egothor](https://www.egothor.org/product/egothor2/),
 który polegał na stworzeniu Open Source wyszukiwarki tekstu ze wszystkimi funkcjami tego zagadnienia.
 Po jakimś czasie zostal też włączony jako część [Apache Lucene](https://lucene.apache.org/core/3_1_0/api/contrib-stempel/index.html),
@@ -98,11 +98,11 @@ Więcej informacji o steemerze znajduje się o [tutaj](https://github.com/dzieci
 
 Lematyzacja oznacza sprowadzenie grupy wyrazów stanowiących odmianę danego zwrotu do wspólnej 
 postaci, umożliwiając traktowanie ich wszystkich jako to samo słowo. W przetwarzaniu języka 
-naturalnego odgrywa rolę ujednoznaczenia, np. słowa "are", "is", "Am", pochodzą od słowa "Be".
+naturalnego odgrywa rolę ujednoznacznienia, np. słowa "are", "is", "Am", pochodzą od słowa "Be".
 
 Tagowanie to inaczej proces klasyfikowania słów na ich części mowy i odpowiedniego ich oznaczania .
 Części mowy są również znane jako klasy słów lub kategorie leksykalne. Zbiór znaczników używanych 
-w danym zadaniu nazywany jest zbiorem znaczników. Praca która dokładnie opisuje wiele aspektów
+w danym zadaniu nazywany jest zbiorem znaczników. Praca, która dokładnie opisuje wiele aspektów
 dotyczących tagowania znajduje się [tutaj](http://nlp.ipipan.waw.pl/Bib/kob:kie:16.pdf).
 
 ### Morfeusz 2
@@ -112,7 +112,7 @@ analizatora morfologicznego dla języka polskiego. Poprzednie wersje programu  s
 podstawą wielu narzędzi przetwarzania języka, w szczególności kilku tagerów
 i parserów języka polskiego. 
 Wersja druga programu, opracowana jako część infrastruktury Clarin-PL,
-różni się od porzednika wieloma ważnymi ulepszeniami.
+różni się od poprzednika wieloma ważnymi ulepszeniami.
 
 Oto przykład wyników działania programu dla tekstu „Mam próbkę analizy morfologicznej.”:
 
@@ -146,7 +146,7 @@ Morfeusz 2 zawiera [GUI](http://morfeusz.sgjp.pl/download/gui/) napisane w C++.
 
 ##### Użycie z poziomu C++
 [Dokumentacja](http://download.sgjp.pl/morfeusz/Morfeusz2.pdf) zawiera sześć stron (7-13) dokładnie opisanych kroków,
-które należy wykonać do użycia interesująych nas opcji.
+które należy wykonać do użycia  interesujących nas opcji.
 
 Przykład analizy z wektorem jako wynikiem:
 ```cpp
@@ -213,13 +213,13 @@ morf.generate(u'piec')
 W odróżnieniu od analyse, generate akceptuje tylko napisy stanowiące pojedyncze słowo (bez spacji), w przeciwnym
 przypadku zostanie zgłoszony wyjątek.
 
-Więcej informacji apropo używania morfeusza w pythonie znajduje się w [dokumentacji morfeusza](http://download.sgjp.pl/morfeusz/Morfeusz2.pdf)
+Więcej informacji dotyczących używania morfeusza w pythonie znajduje się w [dokumentacji morfeusza](http://download.sgjp.pl/morfeusz/Morfeusz2.pdf)
 na stronach
 14-16.
 
 ## Tokenizacja 
 
-Tokenizatory dzielą ciągi znaków na listy podłańcuchów, na przykład mogą 
+Tokenizatory dzielą ciągi znaków na listy pod łańcuchów, na przykład mogą 
 być używane do znajdowania słów i znaków interpunkcyjnych w łańcuchu znaków.
 
 ### NTLK
@@ -258,25 +258,112 @@ w następujący sposób:
 
 ## Modele językowe 
 
-Model propabilistyczny, którego celem jest obliczenie prawdopodobieństwa wystąpienia kolejnego słowa po zadanej wcześniej sekwencji słów. Na podstawie modelu językowego możemy oszacować następne najbardziej prawdopodobne słowo.
+Model probabilistyczny, którego celem jest obliczenie prawdopodobieństwa wystąpienia kolejnego słowa po zadanej wcześniej sekwencji słów. Na podstawie modelu językowego możemy oszacować następne najbardziej prawdopodobne słowo.
 
-Na samym początku wspomnę o rankingu klej - który jest polskim odpowiednikiem angielskiego rankingu GLUE. Został stworzony przez Allegro, i określa ranking najlepszych modeli językowych dla językach polskiego. Rankking możemy znaleźć o [tutaj](https://klejbenchmark.com/leaderboard/)
+Do tej pory pionierem do spraw języka naturalnego w wielu językach był googlowski 
+BERT, jednak w klasyfikacji GLUE dostał tylko 80 na 100 punktów. Na podstawie 
+BERT’a powstał Polski RoBERT, który osiągnął 87/100 punktów w teście KLEJ, a
+jeszcze potem na podstawie RoBERTA powstał HerBERT, osiągając najwyższą do 
+tej pory notę 88/100.
 
-Do tej pory pionierem do spraw języka naturalnego w wielu językach był googlowski BERT, jednak w klasyfikacji GLUE dostał tylko 80 na 100 punktów. Na podstawie BERT’a powstał Polski RoBERT, który osiągnął 87/100 punktów w teście KLEJ, a jeszcze potem na podstawie RoBERTA powstał HerBERT, osiągając najwyższą do tej pory notę 88/100.
 
+### KLEJ
+Na samym początku wspomnę o rankingu klej - który jest polskim odpowiednikiem 
+angielskiego rankingu GLUE. Został stworzony przez Allegro, i określa ranking 
+najlepszych modeli językowych dla języka polskiego. Ranking możemy znaleźć 
+o [tutaj](https://klejbenchmark.com/leaderboard/).
+
+Ranking jest tworzony na podstawie dziewięciu zadań dotyczących rozumienia
+języka polskiego, wszystkie z różnych dziedzin i o różnych celach. Większość 
+zadań jest tworzona na podstawie istniejących zbiorów danych, ale udostępniamy 
+również nowy zbiór danych do analizy sentymentu z dziedziny handlu elektronicznego.
+Zawiera zadania, które mają stosunkowo małe zbiory danych i wymagają szerokiej 
+wiedzy zewnętrznej do ich rozwiązania. Promuje on wykorzystanie uczenia 
+transferowego zamiast trenowania oddzielnych modeli od podstaw. Dodatkowo zapewnia
+automatyczną ocenę oraz udostępnia tablice liderów. Jedynym wymogiem jest przygotowanie
+modelu do odpowiedniego formatu.
+
+#### Przewidziane zadania
+
+- NKJP-NER - NKJP-NER opiera się na adnotowanej przez człowieka części NKJP. 
+Zadanie polega na przewidzeniu typu nazwanego podmiotu.
+- CDSC-E - Korpus kompozycyjnej semantyki dystrybutywnej składa się z par zdań,
+które zostały opatrzone ludzką adnotacją dotyczącą ich implikacji.
+- CDSC-R - Korpus kompozycyjnej semantyki dystrybutywnej składa się z par zdań,
+które są anotowane przez człowieka pod kątem ich pokrewieństwa semantycznego.
+- CBD - Zadanie Cyberbullying Detection było częścią konkursu PolEval edycja 2019. 
+Celem zadania jest przewidzenie, czy dana wiadomość na Twitterze zawiera treści cyberprzemocowe (szkodliwe).
+- PolEmo2.0 jest zbiorem recenzji internetowych z dziedziny medycyny
+i hotelarstwa. Zadanie polega na przewidywaniu sentymentu recenzji.
+Istnieją dwa oddzielne zestawy testowe, aby umożliwić walidację zarówno 
+wewnątrzdomenową (medycyna i hotele), jak i pozadomenową (produkty i uniwersytety).
+- PolEmo2.0-OUT
+- DYK ("Did you know?") - Zbiór  danych  składa się z opisanych przez człowieka
+par pytanie-odpowiedź. Zadanie polega na przewidzeniu,
+czy odpowiedź jest poprawna. 
+- PSC - Polski Korpus Streszczeń zawiera artykuły informacyjne i ich streszczenia. 
+Jako pary pozytywne zostały wykorzystane streszczenia tego samego artykułu,
+a jako pary negatywne - najbardziej podobne streszczenia różnych artykułów.
+- AR - Recenzje Allegro to zbiór recenzji produktów z Allegro. Zadanie
+polega na przewidzeniu oceny z przedziału od 1 do 5.
 
 ### Hugging Transformers
 
 [Strona HuggingTransformers](https://huggingface.co/models?sort=downloads) zawiera ogromną ilość modeli
-do zagadnień takich jak postrzeganie obrazów przez maszyny, NLP, rozpoznawania mowy i dźwięku, itp.
+do zagadnień takich jak postrzeganie obrazów przez maszyny, NLP, rozpoznawania mowy i dźwięku, i tym podobne.
+Poniżej 
+lista zagadnień:
 
-Oto lista zagadnień:
+Computer Vision:
+- Image classification
+- Image segmentation
+- Image-to-image
+- Uncoditional image generation
+- Object detection
 
-![lista zagadnien](https://imgur.com/a/xC7DUNq)
+Natural language processing:
+- Translation
+- Fill-mask
+- Token classification
+- Sentence similarity
+- Question answering
+- Summarization
+- Zero-shot classification
+- Text classification
+- Text2Text generation
+- Text generation
+- Conversational
+- Table question answering
+
+Audio:
+- Automatic speech recognition
+- Audio classification
+- Text-to-Speech
+- Audio-to-Audio
+- Voice activity detection
+
+Multimodal:
+- Feature extraction
+- Text-to-image
+- Image-to-text
+
+Structured:
+- Tabular classification
+
+Reinforcement learning:
+- Reinforcement learning
 
 Po wybraniu interesującego nas tagu dostajemy listę modeli dostępnych na stronie:
 
-![wybranie taga](https://imgur.com/a/28fBnP0)
+![wybranie taga](img2.png)
+
+Przykładowy zrzut ekranu modelu:
+
+![huggingtransf_ss](img3.png)
+
+Na stronie większości modeli znajdują się takie informacje jak opisy modeli, 
+jak ich używać, do czego model jest zdolny oraz jego granice, na czym
+model został wytrenowany, wyniki modelu, itp. itd.
 
 ### BERT
 
@@ -309,7 +396,7 @@ for pred in nlp(f"Adam Mickiewicz wielkim polskim {nlp.tokenizer.mask_token} by�
 
 #### Cased
 
-Wszystko takie same jak w cased, tylko że ze zmianą na "Whole Word Masking" - maskowanie wszystkich podsłów danego słowa.
+Wszystko takie same jak w cased, tylko że ze zmianą na "Whole Word Masking" - maskowanie wszystkich pod słów danego słowa.
 
 Sposób użycia:
 
@@ -334,12 +421,17 @@ Wyniki obydwu wariantów w rankingu KLEJ:
 
 ### RoBERTa
 
-Model stworzony przez Ośrodek Przetwarzania Informacji na podstawie BERTa. Powstały dwa modele, large i base, z czego large został wytrenowany na około 130GB danych, a do mniejszy na 20GB - wśród korpusy znajdowały się wysokiej jakości teksty z wikipedii, dokumenty polskiego parlamentu, wypowiedzi z mediów społecznościowych, książki, artykuły, oraz dłuższe formy pisane. Z obu można korzystać w zależności od potrzeb i możliwości technicznych. Pierwszy oferuje większą precyzje ale zarazem wymaga większej mocy obliczeniowej, gdzie drugi jest szybszy lecz ofertuje nieco gorsze wyniki.
+Model stworzony przez Ośrodek Przetwarzania Informacji na podstawie BERTa. Powstały dwa modele, large i
+base, z czego large został wytrenowany na około 130GB danych, a do mniejszy na 20GB - wśród korpusów
+znajdowały się wysokiej jakości teksty z Wikipedii, dokumenty polskiego parlamentu, wypowiedzi z mediów społecznościowych, książki
+, artykuły, oraz dłuższe formy pisane. Z obu 
+można korzystać w zależności od potrzeb i możliwości technicznych. Pierwszy oferuje większą precyzję 
+ale zarazem wymaga większej mocy obliczeniowej, gdzie drugi jest szybszy, lecz oferuje nieco gorsze wyniki.
 
 Modele zostały wytrenowane na dwa sposoby, korzystając z toolkitu [fairseq](https://github.com/pytorch/fairseq) 
 i [Huggingface Transformers](https://github.com/huggingface/transformers). Fairseq służy do
-modelowania sekwencyjnego i pozwala trenenować nieszablonowe modele do tłumaczeń, modeli 
-językowych, uogalniania oraz innych zadań związanych z tekstem, gdzie Huggingface dostarcza 
+modelowania sekwencyjnego i pozwala trenować nieszablonowe modele do tłumaczeń, modeli 
+językowych, uogólniania  oraz innych zadań związanych z tekstem, gdzie Huggingface dostarcza 
 tysiące pre-trained modeli do zadań dotyczących tekstu, obrazów, oraz audio.
 
 
@@ -519,18 +611,18 @@ output = model(
 ```
 
 
-[Praca](https://aclanthology.org/2021.bsnlp-1.1/) w której został dokładnie opisany HerBERT.
+[Praca](https://aclanthology.org/2021.bsnlp-1.1/), w której został dokładnie opisany HerBERT.
 
 ### Model językowy autorstwa Teresy Sas
 
-Model jest zbudowany na zasobach tekstów o tematyce akademickiej i ogólnej, obejmując prawie 800 tyś. słów. W linku możemy pobrać zipa w którym znajdują się trzy pliki:
+Model jest zbudowany na zasobach tekstów o tematyce akademickiej i ogólnej, obejmując prawie 800 tyś. słów. W linku możemy pobrać zipa, w którym znajdują się trzy pliki:
 •	model_2d_forward.txt - model bigramowy zawierający prawdopodobieństwa następstwa słów p(w_i | w_{i-1} ) dla porządku od lewej do prawej
 •	model 3d_bakward.txt - model trigramowy zawierający prawdopodobieństwa p( w_i | w_{i+1} w_{i+2} ) dla porządku odwróconego
 •	word_list.txt - lista słów występujących w modelu
 
 Model może być wykorzystany w badaniach nad rozpoznawaniem mowy i w inżynierii języka naturalnego dla języka polskiego.
 
-Więcej informacji apropo modelu można zaleźć o [tutaj](https://zasobynauki.pl/zasoby/model-jezykowy-dla-jezyka-polskiego,55644/).
+Więcej informacji dotyczących modelu można zaleźć o [tutaj](https://zasobynauki.pl/zasoby/model-jezykowy-dla-jezyka-polskiego,55644/).
 
 
 
@@ -547,16 +639,16 @@ Więcej informacji apropo modelu można zaleźć o [tutaj](https://zasobynauki.p
 
 W powyższej implementacji została użyta biblioteka „gensim”, która pozwala wczytać dane, wytrenować model, 
 oraz końcowo sprawdzić wyniki. Oprócz tworzenia wektorowych przedstawień słów biblioteka ma wiele innych funkcji,
-między innymi może znajdować semantycznie podobne dokumenty do tego który został jej zadany. Żeby określić 
-word-embedinngi w powyższej implementacji używana jest funkcja "evaluation_word_pairs" oraz "assessment_word_analogies" z biblioteki gensim.
+między innymi może znajdować semantycznie podobne dokumenty do tego, który został jej zadany. Żeby określić 
+word-embedinngi w powyższej implementacji, używana jest funkcja "evaluation_word_pairs" oraz "assessment_word_analogies" z biblioteki gensim.
 
-Do testowania został użyty plik dostarczony przez [facebook fastext](https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.pl.300.vec.gz). Żeby określić podobieństwo słów użyto polskiej wersji [SimLex999](http://zil.ipipan.waw.pl/CoDeS?action=AttachFile&do=view&target=MSimLex999_Polish.zip), stworzonej przez IPIPAN.
+Do testowania został użyty plik dostarczony przez [facebook fastext](https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.pl.300.vec.gz). Żeby określić podobieństwo słów, użyto polskiej wersji [SimLex999](http://zil.ipipan.waw.pl/CoDeS?action=AttachFile&do=view&target=MSimLex999_Polish.zip), stworzonej przez IPIPAN.
 
-Dokładniejszy opis jak i Obszerna tabelka z wynikami znajduje się w podanym w pierwszej linijce linku.
+Dokładniejszy opis, jak i Obszerna tabelka z wynikami znajduje się w podanym w pierwszej linijce linku.
 
 ### Opis word embeddingów Sławomira Dadasa
 
-Poniższe rozdziały zawierają pretrained word embeddings dla językach polskiego. Każdy model został wytrenowany
+Poniższe rozdziały zawierają pretrained word embeddings dla języka polskiego. Każdy model został wytrenowany
 na korpusie składającym się z zasobów polskiej Wikipedii, polskich książek i artykułów, w sumie 1,5 miliarda tokenów.
 
 #### Word2vec
@@ -578,7 +670,7 @@ Prezentacja dotycząca Word2Vec znajduje się o [tutaj](Prezentacja dotycząca W
 
 #### FastText
 
-FastText trenowany za pomocą biblioteki Gensim. Słownictwo i wymiarowość są identyczne jak w modelu Word2Vec. 
+FastText trenowany za pomocą biblioteki Gensim. Słownictwo i wymiarowość są identyczne w porównaniu do modelu Word2Vec. 
 
 Przykład użycia:
 
@@ -675,7 +767,7 @@ Więcej informacji o word embeddingach możemy znaleźć o [tutaj](https://githu
 ```text
 The Loner You love curry, right? I'll give you more. Hey! Is it good? Hey, ugly. Look at her. - Craz...
 ```
-[Zbiór](https://dl.fbaipublicfiles.com/fasttext/word-analogies/questions-words-pl.txt) zawierjający analogie ("Ateny Grecja Bagdad Irak")
+[Zbiór](https://dl.fbaipublicfiles.com/fasttext/word-analogies/questions-words-pl.txt) zawierający analogie ("Ateny Grecja Bagdad Irak")
 , przydatny do word embedinggsów.
 
 ```text
@@ -702,7 +794,7 @@ Narodowy Korpus Języka Polskiego jest wspólną inicjatywą Instytutu Podstaw I
 
 Te cztery instytucje wspólnie zbudowały korpus referencyjny polszczyzny wielkości ponad półtora miliarda słów. Wyszukiwarki korpusowe pozwalają przeszukiwać zasoby NKJP zaawansowanymi narzędziami uwzględniającymi odmianę polskich wyrazów, a nawet analizującymi budowę polskich zdań.
 
-Lista źródeł korpusu zawiera nie tylko klasykę literatury polskiej, ale też prasę codzienną i specjalistyczną, nagrania rozmów, teksty ulotne i internetowe. Zróżnicowanie tematyczne i gatunkowe tekstów, dbałość o reprezentację rozmówców obu płci, w różnym wieku i z różnych regionów, są dla wiarygodności korpusu równie ważne jak jego wielkość.
+Lista źródeł korpusu zawiera nie tylko klasykę literatury polskiej, ale też prasę codzienną i specjalistyczną, nagrania rozmów, teksty ulotne i internetowe. Zróżnicowanie tematyczne i gatunkowe tekstów, dbałość o reprezentację rozmówców obu płci, w różnym wieku i z różnych regionów, są dla wiarygodności korpusu równie ważne, jak jego wielkość.
 
 Na podstawie korpusu powstały dwie wyszukiwarki:
 * IPI PAN
@@ -750,7 +842,7 @@ jest również przydatny do walidacji metod klasyfikacji obrazów.
 
 #### [Korpus dyskursu parlamentarnego](https://kdp.nlp.ipipan.waw.pl/query_corpus/)
 
-Korpus Dyskursu Parlamentarnego jest zbiorem anotowanych lingwistycznie tekstów z posiedzeń plenarnych Sejmu 
+Korpus Dyskursu Parlamentarnego jest zbiorem adnotowanych lingwistycznie tekstów z posiedzeń plenarnych Sejmu 
 i Senatu RP, interpelacji i zapytań poselskich oraz posiedzeń komisji od roku 1919 do chwili obecnej 
 (są stale uzupełniane materiałami z kolejnych posiedzeń). Teksty opisane metadanymi oraz przetworzone 
 automatycznie narzędziami lingwistycznymi (do segmentacji, analizy morfoskładniowej, rozpoznawania 
@@ -758,7 +850,7 @@ grup składniowych i nazw własnych) są dostępne do przeszukiwania oraz pobran
 
 
 
-#### [Korpus dla smenatyki kompozycyjnej dystrybucyjnej](http://zil.ipipan.waw.pl/Scwad/CDSCorpus)
+#### [Korpus dla semantyki kompozycyjnej dystrybucyjnej](http://zil.ipipan.waw.pl/Scwad/CDSCorpus)
 
 Składa się z 10 tys. polskich par zdań, które są opisane przez człowieka pod kątem pokrewieństwa semantycznego.
 Zbiór danych może być wykorzystany do ewaluacji modeli kompozycyjnej semantyki dystrybucyjnej języka polskiego.
@@ -767,9 +859,9 @@ Zbiór danych może być wykorzystany do ewaluacji modeli kompozycyjnej semantyk
 
 #### [Korpus polskich recenzji ](https://clarin-pl.eu/dspace/handle/11321/700)
 
-Wrocławski Korpus Recenzji Konsumenckich jest korpusem polskich recenzji opatrzonych anotacją sentymentu na 
+Wrocławski Korpus Recenzji Konsumenckich jest korpusem polskich recenzji opatrzonych adnotacją sentymentu na 
 poziomie całego tekstu (*tekst*) oraz na poziomie zdań (*zdanie*) dla następujących dziedzin: hotele, medycyna, 
-produkty i uczelnie (recenzje*). Zdania są opatrzone anotacją sentymentu tylko dla hoteli i medycyny. 
+produkty i uczelnie (recenzje*). Zdania są opatrzone adnotacją sentymentu tylko dla hoteli i medycyny. 
 Każdy plik *sentence* zawiera pojedyncze zdanie z etykietą sentymentu __label__z_X, a każdy plik *text* 
 zawiera pojedynczą recenzję z etykietą sentymentu __label__meta_X. 
 
@@ -818,225 +910,223 @@ mofosyntaktyczną z adnotacją MWE.
 ### Zbiory użyte do HerBERTa
 - https://huggingface.co/datasets/allegro/klej-psc
 
-extract_text
-```text
-Prywatna spółka KrzysztofaToeplitza od siedmiu lat wynajmuje atrakcyjną kamienicę na Starym Mieście. 
-wątpliwości budzi umowa najmu. traci na niej skarb państwa. 1994 roku dyrektor ODZ, podpisał umowę najmu 
-kamienicy z Towarzystwem Wydawniczym i Literackim. Pierwotna umowa została zmieniona. powiększano wynajmowaną 
-powierzchnię. Wydłużono też okres wynajmu. W umowie nie uwzględniono jednak możliwości podniesienia czynszu.
-```
-summary_text
-```text
-W piątek w wielu uczelniach odbyły się uroczyste inauguracje roku akademickiego. Niestety, szybciej 
-przybywa studentów niż środków na pomoc materialną w budżecie państwa. Tę sytuację tylko trochę łagodzą 
-wprowadzone w ubiegłym roku preferencyjne kredyty. Zdecydowanie brakuje też miejsc w akademikach. Uczelnie 
-państwowe coraz silniej odczuwają konieczność wprowadzenia odpłatności za studia. Jeżeli rząd nie przeznaczy 
-na uczelnie wystarczających kwot w budżecie, to niezbędne będzie wprowadzenie częściowej odpłatności także za 
-studia dzienne.
-```
-label
-```text
-0
-```
+| extract_text (string)                                                                                                                                                                                                                                                                                                                                                                                                                  | summary_text (string)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | label (int) |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| Prywatna spółka KrzysztofaToeplitza od siedmiu lat wynajmuje atrakcyjną kamienicę na Starym Mieście. Wątpliwości budzi umowa najmu. traci na niej skarb państwa. 1994 roku dyrektor ODZ, podpisał umowę najmukamienicy z Towarzystwem Wydawniczym i Literackim. Pierwotna umowa została zmieniona. powiększano wynajmowanąpowierzchnię. Wydłużono też okres wynajmu. W umowie nie uwzględniono jednak możliwości podniesienia czynszu. | W piątek w wielu uczelniach odbyły się uroczyste inauguracje roku akademickiego.Niestety, szybciejprzybywa studentów niż środków na pomoc materialną w budżecie państwa. Tę sytuację tylko trochę łagodząwprowadzone w ubiegłym roku preferencyjne kredyty. Zdecydowanie brakuje też miejsc w akademikach. Uczelniepaństwowe coraz silniej odczuwają konieczność wprowadzenia odpłatności za studia. Jeżeli rząd nie przeznaczyna uczelnie wystarczających kwot w budżecie, to niezbędne będzie wprowadzenie częściowej odpłatności także za studia dzienne. | 0           |
+
 - https://huggingface.co/datasets/allegro/klej-dyk
 
-question
-```text
-z jakiego powodu zwołano synod w Whitby?
-```
+|q_id (string)     | question (string)  | answer (string)  | target(int)  |
+|-----|---|---|---|
+|czywiesz4068     | z jakiego powodu zwołano synod w Whitby?  | Wśród mnichów i mniszek mieszkających w Whitby, znajduje się wiele osób czczonych jako święte: św. Hilda -pochodząca z dynastii rządzącej Northumbrią, pierwsza ksieni opactwa; św. Edwin - król Northumbrii; św.Cedmon z Whitby - poeta; św. Bergu - mniszka i dziewica, miała wizję duszy św. Hildy w dniu jej śmierci;św. Trumwin - biskup Abercorn, schronił się w Whitby przed prześladowaniem; św. Elfleda - córka Oswiu,przysłana do klasztoru po jego klęsce w bitwie z Pendą z Mercji św. Bosa - biskup Yorku; św. Wilfrid - biskup Yorku; św. Enfleda - córka św. Edwina i żona św. Oswiu  |  0 |
 
-answer
-```text
-Wśród mnichów i mniszek mieszkających w Whitby, znajduje się wiele osób czczonych jako święte: św. Hilda - 
-pochodząca z dynastii rządzącej Northumbrią, pierwsza ksieni opactwa; św. Edwin - król Northumbrii; św. 
-Cedmon z Whitby - poeta; św. Bergu - mniszka i dziewica, miała wizję duszy św. Hildy w dniu jej śmierci; 
-św. Trumwin - biskup Abercorn, schronił się w Whitby przed prześladowaniem; św. Elfleda - córka Oswiu, 
-przysłana do klasztoru po jego klęsce w bitwie z Pendą z Mercji św. Bosa - biskup Yorku; św. Wilfrid - 
-biskup Yorku; św. Enfleda - córka św. Edwina i żona św. Oswiu
-```
-
-target
-```text
-0
-```
 - https://huggingface.co/datasets/allegro/klej-polemo2-in
 
-sentence
-```text
-Super lekarz i człowiek przez duże C . Bardzo duże doświadczenie i trafne diagnozy . Wielka cierpliwość do ludzi 
-starszych . Od lat opiekuje się moją Mamą staruszką , i twierdzę , że mamy duże szczęście , że mamy takiego 
-lekarza . Naprawdę nie wiem cobyśmy zrobili , gdyby nie Pan doktor . Dzięki temu , moja mama żyje . Każda wizyta 
-u specjalisty jest u niego konsultowana i uważam , że jest lepszy od każdego z nich . Mamy do Niego prawie 
-nieograniczone zaufanie . Można wiele dobrego o Panu doktorze jeszcze napisać . Niestety , ma bardzo dużo 
-pacjentów , jest przepracowany ( z tego powodu nawet obawiam się o jego zdrowie ) i dostęp do niego jest 
-trudny , ale zawsze możliwy .
-```
-target
-```text
-__label__meta_plus_m
-```
+| sentence (string)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | target (string)  |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|
+| Super lekarz i człowiek przez duże C . Bardzo duże doświadczenie i trafne diagnozy . Wielka cierpliwość do ludzi starszych . Od lat opiekuje się moją Mamą staruszką , i twierdzę , że mamy duże szczęście , że mamy takiego lekarza . Naprawdę nie wiem cobyśmy zrobili , gdyby nie Pan doktor . Dzięki temu , moja mama żyje . Każda wizyta u specjalisty jest u niego konsultowana i uważam , że jest lepszy od każdego z nich . Mamy do Niego prawie nieograniczone zaufanie . Można wiele dobrego o Panu doktorze jeszcze napisać . Niestety , ma bardzo dużo pacjentów , jest przepracowany ( z tego powodu nawet obawiam się o jego zdrowie ) i dostęp do niego jest trudny , ale zawsze możliwy . | __label__meta_plus_m  |
+
 - https://huggingface.co/datasets/allegro/klej-cdsc-e
 
-sentence A
-```text
-Chłopiec w czerwonych trampkach skacze wysoko do góry nieopodal fontanny .
-```
+| pair_ID (int)  | sentence_A (string)  |  sentence_B (string) | entailment_judgment (string)  |
+|---|---|---|---|
+| 1  | Chłopiec w czerwonych trampkach skacze wysoko do góry nieopodal fontanny .  | Chłopiec w bluzce w paski podskakuje wysoko obok brązowej fontanny .  | NEUTRAL  |
 
-sentence B 
-```text
-Chłopiec w bluzce w paski podskakuje wysoko obok brązowej fontanny .
-```
-entailment_judgment
-```text
-NEUTRAL
-```
 - https://huggingface.co/datasets/allegro/klej-allegro-reviews
 
-sentence 
-```text
-Jako do ceny dobra. Przyssawka mogłaby być lepsza. Po 2 miesiącach użytkowania musiałem nóżkę z przyssawką
-rozkręcić i przyssawkę podkleić bo guma zaczęła pękać od strony mocowania do uchwytu (uchwyt zaczął się po 
-prostu trząść bo zrobił się luz). Mechanizm mocowania telefonu póki co (3 miesiące użytkowania) działa bez zarzutu.
-```
-target 
-```text
-3
-```
+| Jako do ceny dobra. Przyssawka mogłaby być lepsza. Po 2 miesiącach użytkowania musiałem nóżkę z przyssawką rozkręcić i przyssawkę podkleić bo guma zaczęła pękać od strony mocowania do uchwytu (uchwyt zaczął się po prostu trząść bo zrobił się luz). Mechanizm mocowania telefonu póki co (3 miesiące użytkowania) działa bez zarzutu.  |  rating (float) |
+|---|---|
+| Jako do ceny dobra. Przyssawka mogłaby być lepsza. Po 2 miesiącach użytkowania musiałem nóżkę z przyssawką rozkręcić i przyssawkę podkleić bo guma zaczęła pękać od strony mocowania do uchwytu (uchwyt zaczął się po prostu trząść bo zrobił się luz). Mechanizm mocowania telefonu póki co (3 miesiące użytkowania) działa bez zarzutu.  | 3  |
+
 - https://huggingface.co/datasets/allegro/klej-polemo2-out
 
-sentence
-```text
-Super lekarz i człowiek przez duże C . Bardzo duże doświadczenie i trafne diagnozy . Wielka cierpliwość do 
-ludzi starszych . Od lat opiekuje się moją Mamą staruszką , i twierdzę , że mamy duże szczęście , że mamy 
-takiego lekarza . Naprawdę nie wiem cobyśmy zrobili , gdyby nie Pan doktor . Dzięki temu , moja mama żyje . 
-Każda wizyta u specjalisty jest u niego konsultowana i uważam , że jest lepszy od każdego z nich . Mamy do 
-Niego prawie nieograniczone zaufanie . Można wiele dobrego o Panu doktorze jeszcze napisać . Niestety , ma 
-bardzo dużo pacjentów , jest przepracowany ( z tego powodu nawet obawiam się o jego zdrowie ) i dostęp do 
-niego jest trudny , ale zawsze możliwy .
-```
+|  sentence (string) | target (string)  |
+|---|---|
+|  Super lekarz i człowiek przez duże C . Bardzo duże doświadczenie i trafne diagnozy . Wielka cierpliwość do ludzi starszych . Od lat opiekuje się moją Mamą staruszką , i twierdzę , że mamy duże szczęście , że mamy takiego lekarza . Naprawdę nie wiem cobyśmy zrobili , gdyby nie Pan doktor . Dzięki temu , moja mama żyje . Każda wizyta u specjalisty jest u niego konsultowana i uważam , że jest lepszy od każdego z nich . Mamy do Niego prawie nieograniczone zaufanie . Można wiele dobrego o Panu doktorze jeszcze napisać . Niestety , ma bardzo dużo pacjentów , jest przepracowany ( z tego powodu nawet obawiam się o jego zdrowie ) i dostęp do niego jest trudny , ale zawsze możliwy . |  __label__meta_plus_m |
 
-target
-```text
-__label__meta_plus_m
-```
 - https://huggingface.co/datasets/allegro/klej-nkjp-ner
 
-sentence 
-```text
-- Widzi pani , a Blokowa wzięła i się nie zastanawiała , i ma , i może robić , co chce .
-```
+| sentence (string)  | target (string)  |
+|---|---|
+|  - Widzi pani , a Blokowa wzięła i się nie zastanawiała , i ma , i może robić , co chce . | noEntity  |
 
-target 
-```text
-noEntity
-```
 - https://huggingface.co/datasets/allegro/klej-cdsc-r
 
-sentence A
-```text
-Chłopiec w czerwonych trampkach skacze wysoko do góry nieopodal fontanny .
-```
-sentence B
-```text
-Chłopiec w bluzce w paski podskakuje wysoko obok brązowej fontanny .
-```
-relatedness_score 
-```text
-3
-```
+| pair_ID (int)  | sentence_A (string)  | sentence_B (string)  | relatedness_score (float)  |
+|---|---|---|---|
+|  5 |  Pies przebiega po trawie obok stada brązowych krów . |  Pies biegnie po trawie , a dalej stoją brązowe krowy . | 4.83  |
+
 - https://huggingface.co/datasets/allegro/klej-cbd
 
-sentence
-```text
-@anonymized_account Dawno kogoś tak wrednego nie widziałam xd
+|sentence (string)   | target (int)  |
+|---|---|
+| Dla mnie faworytem do tytułu będzie Cracovia. Zobaczymy, czy typ się sprawdzi.  |  0 |
+
+- https://huggingface.co/datasets/allegro/summarization-polish-summaries-corpus
+
+| source (string)  |  target (string) |
+|---|---|
+| PODRĘCZNIKI We wrześniu wielu książek będzie brakować - twierdzą wydawcy Walka o ucznia ŁUKASZ GOŁĘBIEWSKI Wprowadzona od września tego roku reforma oświaty przewiduje konieczność wymiany wszystkich podręczników do IV klasy szkoły podstawowej i wydrukowania nowych książek do pierwszej klasy gimnazjum, która zastąpi siódmą klasę podstawówki. W połowie czerwca nawet połowa nowych podręczników nie została jeszcze wydrukowana i już dziś wiadomo, że we wrześniu wielu książek będzie brakować. W poprzednich latach wydawcy rozpoczynali druk podręczników w marcu. Od czerwca zaczynał się sezon ich sprzedaży, którego kulminacja przypadała na koniec września. W tym roku w czerwcu sprzedaż książek szkolnych była o 80-90 proc. mniejsza, niż w latach ubiegłych. Nauczyciele nie wiedzą, jakie podręczniki polecać na następny rok, wydawcy czekają z drukiem na akceptację resortu edukacji, a Ministerstwo Edukacji Narodowej do 12 lipca wydłużyło termin składania wniosków o wpis do rejestru książek dopuszczonych do nauki w szkołach. Bogata oferta - Wykaz książek zatwierdzonych przez MEN będzie dopiero pod koniec sierpnia - mówi Danuta Mieszkowska z departamentu kształcenia i wychowania MEN. - Wydłużyliśmy okres składania wniosków o wpis do rejestru na prośbę samych wydawców. Dotychczas wpłynęło ponad sto wniosków. Z naszego rozeznania wynika, że do każdego przedmiotu w klasach objętych reformą będą co najmniej dwa podręczniki. Z naszej ankiety przeprowadzonej wśród wydawców książek szkolnych wynika, że będzie tych podręczników więcej: 3-4, a do niektórych przedmiotów nawet 6. Razem z zeszytami ćwiczeń, które nie wymagają aprobaty MEN, w tym roku pojawi się ok. 400 nowych tytułów adresowanych do uczniów klas objętych reformą oraz klas I-III (tu nie ma konieczności wymiany książki, jednak wielu wydawców przygotowało na ten rok nowoczesne zintegrowane podręczniki). Wydawnictwa Szkolne i Pedagogiczne - potentat na tym rynku - szykują nowe podręczniki do wszystkich zreformowanych klas, jednak nie wszystkie są już wydrukowane. - Najgorsza jest niewiedza - mówi Iwona Ring, dyrektor ds. promocji w wydawnictwie. - Nie wiemy, czy wszystkie nasze podręczniki uzyskają akceptację MEN. Wielką niewiadomą są nakłady. Trudno przewidzieć, jak będą się sprzedawały nowe tytuły. Postanowiliśmy zaryzykować i będziemy drukować więcej, niż sprzedawaliśmy w latach ubiegłych. Dzięki temu we wrześniu będzie dużo naszych książek. Jeśli się nie sprzedadzą - albo pójdą na przemiał, albo będą czekały na następny rok. Inni wydawcy są jednak ostrożniejsi niż WSiP. - Nie chcemy ryzykować i na początek drukujemy po 50 tys. każdego tytułu - mówi Piotr Oziębło, dyrektor wydawnictwa Juka-91. - Liczymy, że sprzedamy trzy razy więcej, ale nie chcemy ponosić strat. - Pierwszy nakład każdego z naszych nowych podręczników to 60 tys. egzemplarzy - mówi Tomasz Gigol z Nowej Ery. - Nie ryzykujemy i z drukiem czekamy na akceptację książek przez MEN. W oczekiwaniu na kolejki Pod koniec sierpnia odbędzie się w Pałacu Kultury i Nauki w Warszawie specjalna edycja Targów Książki Edukacyjnej. Wszystko w związku z reformą oświaty i panującym na rynku zamieszaniem, które spowodowało, że w wielu szkołach uczniowie dowiedzą się dopiero we wrześniu, z jakich książek mają się uczyć. Najgorzej, że nawet do klas, które nie są objęte reformą, sprzedaż książek bardzo spadła. - Ponieważ teraz rodzice nie kupują książek, należy oczekiwać, że we wrześniu, a nawet jeszcze w październiku, przed księgarniami będą ustawiały się kolejki - twierdzi Grzegorz Bartosiewicz, szef największej hurtowni książek szkolnych - Wkra. - Wielu tytułów we wrześniu zabraknie, bo wydawcy ostrożniej niż kiedykolwiek planują nakłady. Oznacza to, że w krótkim czasie do hurtowni wpłynie dużo tytułów, które stale trzeba będzie uzupełniać. W razie potrzeby, wprowadzę w swojej firmie pod koniec sierpnia 24-godzinny dzień pracy i przyjmę nowych pracowników. - Z całą pewnością we wrześniu będzie brakowało podręczników. Nauczyciele są zdezorientowani, wydawcy też. Ten rok dla wszystkich jest wielkim doświadczeniem - twierdzi Olgierd Buchocki, szef Gdańskiego Wydawnictwa Oświatowego. - To, co sprzedawano w pięć miesięcy, będzie trzeba sprzedać w 30 dni. Księgarze nie dadzą sobie z tym rady - uważa Marek Rożak, właściciel wydawnictwa edukacyjnego M. Rożak. Nowe firmy Reforma jest dla wydawcy wyzwaniem, ale i ogromną szansą. Na rynku edukacyjnym są największe nakłady książek i najszybszy przepływ gotówki. Wypromowanie nawet jednego podręcznika może oznaczać wzrost obrotów o kilkaset tysięcy złotych. Dlatego wydawcy od kilku miesięcy spotykają się z nauczycielami, wysyłają do szkół gratisowe egzemplarze książek, organizują konferencje metodyczne. - Nasze koszty na promocję w tym roku wzrosły kilkakrotnie - twierdzi Tomasz Gigol z Nowej Ery. - Zazwyczaj wysyłaliśmy nasze materiały do szkół raz w roku, a teraz, do czerwca, zrobiliśmy to już pięć razy (w tym 135 tys. egz. bezpłatnych książek). W tym roku o ucznia walczyć będzie wiele nowych na tym rynku firm: Znak, Prószyński i S-ka, Muza, LektorKlett. Reforma otwiera nowe możliwości. Wiadomo, że nauczyciele niechętnie zmieniają podręczniki, z których uczą. Teraz będą musieli. Ceny wzrosną Wydawnictwa Szkolne i Pedagogiczne przygotowały w tym roku 114 nowych podręczników, z czego dopiero połowa została wydrukowana. Wydawnictwo M. Rożak szykuje nowy podręcznik do przyrody (nowy przedmiot, który pojawi się w klasie IV) oraz historię, polski, geografię i biologię do gimnazjum. Gdańskie Wydawnictwo Oświatowe będzie miało nowe podręczniki do polskiego, historii i matematyki. Nowa Era szykuje książkę do przyrody oraz podręczniki do gimnazjum: biologię, chemię, fizykę, geografię, matematykę, technikę. Juka-91 drukuje nowy zintegrowany elementarz, podręcznik do przyrody i matematyki dla klas IV i historię dla gimnazjum. Res Polona będzie miała nową matematykę dla klas IV-VI i dla gimnazjum, fizykę dla gimnazjum i zintegrowany podręcznik do nauczania w klasach I-III. Zintegrowany podręcznik do nauczania początkowego szykuje też Didasko. Osiem nowych podręczników wyda oficyna Adam. Szesnaście nowych tytułów szykuje poznańska Arka... Wyliczać można długo, bo w Polsce działa blisko 200 wydawnictw specjalizujących się w książce oświatowej. Ceny podręczników nieznacznie wzrosną - o ok. 10 proc. w porównaniu z rokiem ubiegłym (przykładowe ceny podajemy w tabelce). Pojedyncza książka kosztuje dziś w detalu ok. 13-21 złotych, zeszyt ćwiczeń 4-12 złotych. Co roku rodzice muszą jednak wydać od 100 do 200 złotych na podręczniki, co dla wielu domowych budżetów jest sporym obciążeniem. Ceny książek szkolnych nie różnią się znacznie, konkurencja powoduje, że wydawcy nie mają zbyt dużych możliwości ani podnoszenia, ani obniżania cen. Wiele zależy tu od Wydawnictw Szkolnych i Pedagogicznych, do których polityki cenowej dostosowują się mniejsi edytorzy. W ostatnich latach WSiP stosunkowo drogo sprzedawał książki osiągając co roku ogromne zyski. Urok ćwiczeń Nauczyciel będzie miał w czym wybierać. A nowe podręczniki kuszą kredowym papierem, pięknymi ilustracjami, bogatym zestawem ćwiczeń. W niczym nie przypominają tych, z których uczyły się poprzednie pokolenia. Edytorsko są to obecnie jedne z najpiękniejszych książek na polskim rynku. Także tekst uległ przeobrażeniom. Nowe podręczniki mają uczyć samodzielnego myślenia, dlatego ich autorzy dbają o to, by uczeń utrwalał wiedzę dzięki licznym przykładom i ćwiczeniom, wykład zaś ograniczony jest do minimum tłumaczącego definicje i pojęcia. Liczne wykresy i ilustracje przemawiają do wyobraźni ucznia i ułatwiają szybkie zrozumienie tematu lekcji. Poziom podręczników jest wyrównany, tu wchodzą w grę zbyt duże pieniądze, by któryś wydawca mógł sobie pozwolić na wypuszczenie bubla.  | We wrześniu w życie wejdzie reforma oświaty, więc niezbędna będzie wymiana wielu podręczników. Wykaz książek dopuszczonych przez MEN do nauki w szkołach ukaże się dopiero pod koniec sierpnia. Wydawnictwa szukają sposobów, by zachęcić nauczycieli do wybrania ich podręczników. Do tej pory nauczyciele niechętnie zmieniali podręczniki, z których uczyli, a teraz będą do tego zmuszeni.  |
+
+# Bibliografia
+1. http://nlp.ipipan.waw.pl/Bib/kob:kie:16.pdf
+2. http://morfeusz.sgjp.pl/
+3. http://download.sgjp.pl/morfeusz/Morfeusz2.pdf
+4. https://www.nltk.org/api/nltk.tokenize.html
+5. https://klejbenchmark.com/leaderboard/
+6. https://huggingface.co/models?sort=downloads
+7. https://github.com/huggingface/transformers
+8. https://github.com/google-research/bert
+9. https://github.com/facebookresearch/fairseq
+10. https://aclanthology.org/2021.bsnlp-1.1/
+11. https://zasobynauki.pl/zasoby/model-jezykowy-dla-jezyka-polskiego,55644/
+12. http://zil.ipipan.waw.pl/CoDeS?action=AttachFile&do=view&target=MSimLex999_Polish.zip
+13. http://compling.hss.ntu.edu.sg/courses/hg7017/pdf/word2vec%20and%20its%20application%20to%20wsd.pdf
+14. https://arxiv.org/abs/1711.01068
+15. https://github.com/sdadas/polish-nlp-resources
+16. https://opus.nlpl.eu/OpenSubtitles-v2018.php
+17. http://nkjp.pl/poliqarp/
+18. http://www.nkjp.uni.lodz.pl/
+19. http://zil.ipipan.waw.pl/Scwad/AIDe
+20. https://kdp.nlp.ipipan.waw.pl/query_corpus/
+21. http://zil.ipipan.waw.pl/Scwad/CDSCorpus
+22. https://clarin-pl.eu/dspace/handle/11321/700
+23. http://zil.ipipan.waw.pl/HateSpeech
+24. https://clarin-pl.eu/dspace/handle/11321/442
+25. https://clarin-pl.eu/dspace/handle/11321/606
+26. https://clarin-pl.eu/dspace/handle/11321/600
+27. https://clarin-pl.eu/dspace/handle/11321/327
+28. http://vectors.nlpl.eu/repository/
+29. https://huggingface.co/datasets/allegro/klej-psc
+30. https://huggingface.co/datasets/allegro/klej-dyk
+31. https://huggingface.co/datasets/allegro/klej-polemo2-in
+32. https://huggingface.co/datasets/allegro/klej-cdsc-e
+33. https://huggingface.co/datasets/allegro/klej-allegro-reviews
+34. https://huggingface.co/datasets/allegro/klej-polemo2-out
+35. https://huggingface.co/datasets/allegro/klej-nkjp-ner
+36. https://huggingface.co/datasets/allegro/klej-cdsc-r
+37. https://huggingface.co/datasets/allegro/klej-cbd
+38. https://huggingface.co/datasets/allegro/summarization-polish-summaries-corpus
+
+## Cytowania
+```bibtex
+@book{przepiorkowski2012narodowy,
+title={Narodowy korpus j{\k{e}}zyka polskiego},
+author={Przepi{\'o}rkowski, Adam},
+year={2012},
+publisher={Naukowe PWN}
+}
+```
+```bibtex
+@Misc{polish-nlp-resources,
+  author =       {S{\l}awomir Dadas},
+  title =        {A repository of Polish {NLP} resources},
+  howpublished = {Github},
+  year =         {2019},
+  url =          {https://github.com/sdadas/polish-nlp-resources/}
+}
 ```
 
-target
-```text
-0
+```bibtex
+@misc{https://doi.org/10.48550/arxiv.2005.00630,
+  doi = {10.48550/ARXIV.2005.00630},
+  url = {https://arxiv.org/abs/2005.00630},
+  author = {Rybak, Piotr and Mroczkowski, Robert and Tracz, Janusz and Gawlik, Ireneusz},
+  keywords = {Computation and Language (cs.CL), FOS: Computer and information sciences, FOS: Computer and information sciences},
+  title = {KLEJ: Comprehensive Benchmark for Polish Language Understanding},
+  publisher = {arXiv},
+  year = {2020},
+  copyright = {arXiv.org perpetual, non-exclusive license}
+}
 ```
-- https://huggingface.co/datasets/allegro/summarization-polish-summaries-corpus
-```text
-PODRĘCZNIKI We wrześniu wielu książek będzie brakować - twierdzą wydawcy Walka o ucznia ŁUKASZ GOŁĘBIEWSKI 
-Wprowadzona od września tego roku reforma oświaty przewiduje konieczność wymiany wszystkich podręczników do 
-IV klasy szkoły podstawowej i wydrukowania nowych książek do pierwszej klasy gimnazjum, która zastąpi siódmą
-klasę podstawówki. W połowie czerwca nawet połowa nowych podręczników nie została jeszcze wydrukowana i
-już dziś wiadomo, że we wrześniu wielu książek będzie brakować. W poprzednich latach wydawcy rozpoczynali
-druk podręczników w marcu. Od czerwca zaczynał się sezon ich sprzedaży, którego kulminacja przypadała 
-na koniec września. W tym roku w czerwcu sprzedaż książek szkolnych była o 80-90 proc. mniejsza, 
-niż w latach ubiegłych. Nauczyciele nie wiedzą, jakie podręczniki polecać na następny rok, wydawcy 
-czekają z drukiem na akceptację resortu edukacji, a Ministerstwo Edukacji Narodowej do 12 lipca wydłużyło
-termin składania wniosków o wpis do rejestru książek dopuszczonych do nauki w szkołach. Bogata oferta 
-- Wykaz książek zatwierdzonych przez MEN będzie dopiero pod koniec sierpnia - mówi Danuta Mieszkowska
-z departamentu kształcenia i wychowania MEN. - Wydłużyliśmy okres składania wniosków o wpis do rejestru
-na prośbę samych wydawców. Dotychczas wpłynęło ponad sto wniosków. Z naszego rozeznania wynika, że do
-każdego przedmiotu w klasach objętych reformą będą co najmniej dwa podręczniki. Z naszej ankiety 
-przeprowadzonej wśród wydawców książek szkolnych wynika, że będzie tych podręczników więcej: 3-4,
-a do niektórych przedmiotów nawet 6. Razem z zeszytami ćwiczeń, które nie wymagają aprobaty MEN, 
-w tym roku pojawi się ok. 400 nowych tytułów adresowanych do uczniów klas objętych reformą oraz 
-klas I-III (tu nie ma konieczności wymiany książki, jednak wielu wydawców przygotowało na ten rok 
-nowoczesne zintegrowane podręczniki). Wydawnictwa Szkolne i Pedagogiczne - potentat na tym rynku - szykują
-nowe podręczniki do wszystkich zreformowanych klas, jednak nie wszystkie są już wydrukowane. - Najgorsza jest
-niewiedza - mówi Iwona Ring, dyrektor ds. promocji w wydawnictwie. - Nie wiemy, czy wszystkie nasze 
-podręczniki uzyskają akceptację MEN. Wielką niewiadomą są nakłady. Trudno przewidzieć, jak będą się sprzedawały 
-nowe tytuły. Postanowiliśmy zaryzykować i będziemy drukować więcej, niż sprzedawaliśmy w latach ubiegłych. 
-Dzięki temu we wrześniu będzie dużo naszych książek. Jeśli się nie sprzedadzą - albo pójdą na przemiał, albo
-będą czekały na następny rok. Inni wydawcy są jednak ostrożniejsi niż WSiP. - Nie chcemy ryzykować i na 
-początek drukujemy po 50 tys. każdego tytułu - mówi Piotr Oziębło, dyrektor wydawnictwa Juka-91. - Liczymy
-, że sprzedamy trzy razy więcej, ale nie chcemy ponosić strat. - Pierwszy nakład każdego z naszych nowych 
-podręczników to 60 tys. egzemplarzy - mówi Tomasz Gigol z Nowej Ery. - Nie ryzykujemy i z drukiem czekamy 
-na akceptację książek przez MEN. W oczekiwaniu na kolejki Pod koniec sierpnia odbędzie się w Pałacu 
-i Nauki w Warszawie specjalna edycja Targów Książki Edukacyjnej. Wszystko w związku z reformą oświaty i 
-panującym na rynku zamieszaniem, które spowodowało, że w wielu szkołach uczniowie dowiedzą się dopiero we
-wrześniu, z jakich książek mają się uczyć. Najgorzej, że nawet do klas, które nie są objęte reformą, 
-sprzedaż książek bardzo spadła. - Ponieważ teraz rodzice nie kupują książek, należy oczekiwać, że we 
-wrześniu, a nawet jeszcze w październiku, przed księgarniami będą ustawiały się kolejki - twierdzi 
-Grzegorz Bartosiewicz, szef największej hurtowni książek szkolnych - Wkra. - Wielu tytułów we wrześniu 
-zabraknie, bo wydawcy ostrożniej niż kiedykolwiek planują nakłady. Oznacza to, że w krótkim czasie do 
-hurtowni wpłynie dużo tytułów, które stale trzeba będzie uzupełniać. W razie potrzeby, wprowadzę w swojej 
-firmie pod koniec sierpnia 24-godzinny dzień pracy i przyjmę nowych pracowników. - Z całą pewnością we 
-wrześniu będzie brakowało podręczników. Nauczyciele są zdezorientowani, wydawcy też. Ten rok dla wszystkich 
-jest wielkim doświadczeniem - twierdzi Olgierd Buchocki, szef Gdańskiego Wydawnictwa Oświatowego. - To, co 
-sprzedawano w pięć miesięcy, będzie trzeba sprzedać w 30 dni. Księgarze nie dadzą sobie z tym rady - uważa 
-Marek Rożak, właściciel wydawnictwa edukacyjnego M. Rożak. Nowe firmy Reforma jest dla wydawcy wyzwaniem, 
-ale i ogromną szansą. Na rynku edukacyjnym są największe nakłady książek i najszybszy przepływ gotówki. 
-Wypromowanie nawet jednego podręcznika może oznaczać wzrost obrotów o kilkaset tysięcy złotych. Dlatego 
-wydawcy od kilku miesięcy spotykają się z nauczycielami, wysyłają do szkół gratisowe egzemplarze książek, 
-organizują konferencje metodyczne. - Nasze koszty na promocję w tym roku wzrosły kilkakrotnie - twierdzi 
-Tomasz Gigol z Nowej Ery. - Zazwyczaj wysyłaliśmy nasze materiały do szkół raz w roku, a teraz, do czerwca, 
-zrobiliśmy to już pięć razy (w tym 135 tys. egz. bezpłatnych książek). W tym roku o ucznia walczyć będzie 
-wiele nowych na tym rynku firm: Znak, Prószyński i S-ka, Muza, LektorKlett. Reforma otwiera nowe możliwości. 
-Wiadomo, że nauczyciele niechętnie zmieniają podręczniki, z których uczą. Teraz będą musieli. Ceny wzrosną 
-Wydawnictwa Szkolne i Pedagogiczne przygotowały w tym roku 114 nowych podręczników, z czego dopiero połowa 
-została wydrukowana. Wydawnictwo M. Rożak szykuje nowy podręcznik do przyrody (nowy przedmiot, który pojawi 
-się w klasie IV) oraz historię, polski, geografię i biologię do gimnazjum. Gdańskie Wydawnictwo Oświatowe 
-będzie miało nowe podręczniki do polskiego, historii i matematyki. Nowa Era szykuje książkę do przyrody oraz 
-podręczniki do gimnazjum: biologię, chemię, fizykę, geografię, matematykę, technikę. Juka-91 drukuje nowy 
-zintegrowany elementarz, podręcznik do przyrody i matematyki dla klas IV i historię dla gimnazjum. Res Polona 
-będzie miała nową matematykę dla klas IV-VI i dla gimnazjum, fizykę dla gimnazjum i zintegrowany podręcznik 
-do nauczania w klasach I-III. Zintegrowany podręcznik do nauczania początkowego szykuje też Didasko. Osiem 
-nowych podręczników wyda oficyna Adam. Szesnaście nowych tytułów szykuje poznańska Arka... Wyliczać można d
-ługo, bo w Polsce działa blisko 200 wydawnictw specjalizujących się w książce oświatowej. Ceny podręczników 
-nieznacznie wzrosną - o ok. 10 proc. w porównaniu z rokiem ubiegłym (przykładowe ceny podajemy w tabelce). 
-Pojedyncza książka kosztuje dziś w detalu ok. 13-21 złotych, zeszyt ćwiczeń 4-12 złotych. Co roku rodzice 
-muszą jednak wydać od 100 do 200 złotych na podręczniki, co dla wielu domowych budżetów jest sporym obciążeniem. 
-Ceny książek szkolnych nie różnią się znacznie, konkurencja powoduje, że wydawcy nie mają zbyt dużych możliwości 
-ani podnoszenia, ani obniżania cen. Wiele zależy tu od Wydawnictw Szkolnych i Pedagogicznych, do których 
-polityki cenowej dostosowują się mniejsi edytorzy. W ostatnich latach WSiP stosunkowo drogo sprzedawał książki 
-osiągając co roku ogromne zyski. Urok ćwiczeń Nauczyciel będzie miał w czym wybierać. A nowe podręczniki 
-kuszą kredowym papierem, pięknymi ilustracjami, bogatym zestawem ćwiczeń. W niczym nie przypominają tych,
-z których uczyły się poprzednie pokolenia. Edytorsko są to obecnie jedne z najpiękniejszych książek 
-na polskim rynku. Także tekst uległ przeobrażeniom. Nowe podręczniki mają uczyć samodzielnego myślenia, 
-dlatego ich autorzy dbają o to, by uczeń utrwalał wiedzę dzięki licznym przykładom i ćwiczeniom, wykład 
-zaś ograniczony jest do minimum tłumaczącego definicje i pojęcia. Liczne wykresy i ilustracje przemawiają 
-do wyobraźni ucznia i ułatwiają szybkie zrozumienie tematu lekcji. Poziom podręczników jest wyrównany, 
-tu wchodzą w grę zbyt duże pieniądze, by któryś wydawca mógł sobie pozwolić na wypuszczenie bubla.
+
+```bibtex
+@inproceedings{wolf-etal-2020-transformers,
+    title = "Transformers: State-of-the-Art Natural Language Processing",
+    author = "Thomas Wolf and Lysandre Debut and Victor Sanh and Julien Chaumond and Clement Delangue and Anthony Moi and Pierric Cistac and Tim Rault and Rémi Louf and Morgan Funtowicz and Joe Davison and Sam Shleifer and Patrick von Platen and Clara Ma and Yacine Jernite and Julien Plu and Canwen Xu and Teven Le Scao and Sylvain Gugger and Mariama Drame and Quentin Lhoest and Alexander M. Rush",
+    booktitle = "Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing: System Demonstrations",
+    month = oct,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2020.emnlp-demos.6",
+    pages = "38--45"
+}
 ```
-target
-```text
-Krajowy Sąd Partyjny SLD wykluczył z partii byłą przewodniczącą dębickiego Sojuszu Marię Mazur i skarbnika
- Zbigniewa Kozioła za "postawę niegodną członka partii". Wykluczeni twierdzą, że stali się niewygodni. 
- Utrzymują, że nie chcieli tuszować matactw i zadarli z posłem Wiesławem Ciesielskim, szefem SLD w 
- Podkarpackiem, a od niedawna wiceministrem finansów, oraz ze Stanisławem Janasem, wiceprzewodniczącym 
- Rady Krajowej SLD. Zdaniem Kazimierza Jesionka oboje notorycznie łamali kartę zadas etycznych.
+
+```bibtex
+@article{turc2019,
+  title={Well-Read Students Learn Better: On the Importance of Pre-training Compact Models},
+  author={Turc, Iulia and Chang, Ming-Wei and Lee, Kenton and Toutanova, Kristina},
+  journal={arXiv preprint arXiv:1908.08962v2 },
+  year={2019}
+}
+```
+
+```bibtex
+@inproceedings{ott2019fairseq,
+  title = {fairseq: A Fast, Extensible Toolkit for Sequence Modeling},
+  author = {Myle Ott and Sergey Edunov and Alexei Baevski and Angela Fan and Sam Gross and Nathan Ng and David Grangier and Michael Auli},
+  booktitle = {Proceedings of NAACL-HLT 2019: Demonstrations},
+  year = {2019},
+}
+```
+```bibtex
+@inproceedings{mroczkowski-etal-2021-herbert,
+    title = "{H}er{BERT}: Efficiently Pretrained Transformer-based Language Model for {P}olish",
+    author = "Mroczkowski, Robert  and
+      Rybak, Piotr  and
+      Wr{\'o}blewska, Alina  and
+      Gawlik, Ireneusz",
+    booktitle = "Proceedings of the 8th Workshop on Balto-Slavic Natural Language Processing",
+    month = apr,
+    year = "2021",
+    address = "Kiyv, Ukraine",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.bsnlp-1.1",
+    pages = "1--10",
+    abstract = "BERT-based models are currently used for solving nearly all Natural Language Processing (NLP) tasks and most often achieve state-of-the-art results. Therefore, the NLP community conducts extensive research on understanding these models, but above all on designing effective and efficient training procedures. Several ablation studies investigating how to train BERT-like models have been carried out, but the vast majority of them concerned only the English language. A training procedure designed for English does not have to be universal and applicable to other especially typologically different languages. Therefore, this paper presents the first ablation study focused on Polish, which, unlike the isolating English language, is a fusional language. We design and thoroughly evaluate a pretraining procedure of transferring knowledge from multilingual to monolingual BERT-based models. In addition to multilingual model initialization, other factors that possibly influence pretraining are also explored, i.e. training objective, corpus size, BPE-Dropout, and pretraining length. Based on the proposed procedure, a Polish BERT-based language model {--} HerBERT {--} is trained. This model achieves state-of-the-art results on multiple downstream tasks.",
+}
+```
+```bibtex
+@misc{https://doi.org/10.48550/arxiv.1711.01068,
+  doi = {10.48550/ARXIV.1711.01068},
+  url = {https://arxiv.org/abs/1711.01068},
+  author = {Shu, Raphael and Nakayama, Hideki},
+  keywords = {Computation and Language (cs.CL), FOS: Computer and information sciences, FOS: Computer and information sciences},
+  title = {Compressing Word Embeddings via Deep Compositional Code Learning},
+  publisher = {arXiv},
+  year = {2017},  
+  copyright = {arXiv.org perpetual, non-exclusive license}
+}
+
+```
+```bibtex
+@Misc{polish-nlp-resources,
+  author =       {S{\l}awomir Dadas},
+  title =        {A repository of Polish {NLP} resources},
+  howpublished = {Github},
+  year =         {2019},
+  url =          {https://github.com/sdadas/polish-nlp-resources/}
+}
+```
+```bibtex
+@InProceedings{Kocon2019,
+Title = {{Multi-level analysis and recognition of the text sentiment on the example of consumer opinions}},
+Author = {Koco{\'n}, Jan and Zaśko-Zielińska, Monika and Miłkowski, Piotr},
+Booktitle = {Proceedings of the International Conference Recent Advances in Natural Language Processing, RANLP 2019},
+Year = {2019},
+}
+```
+```bibtex
+@article{kocon2018embeddings,
+author = {Koco\'{n}, Jan and Gawor, Micha{\l}},
+title = {Evaluating {KGR10} {P}olish word embeddings in the recognition of temporal
+expressions using {BiLSTM-CRF}},
+journal = {Schedae Informaticae},
+volume = {27},
+year = {2018},
+url = {http://www.ejournals.eu/Schedae-Informaticae/2018/Volume-27/art/13931/},
+doi = {10.4467/20838476SI.18.008.10413}
+}
 ```
