@@ -935,7 +935,7 @@ mofosyntaktyczną z adnotacją MWE.
 
 - https://huggingface.co/datasets/allegro/klej-allegro-reviews
 
-| Jako do ceny dobra. Przyssawka mogłaby być lepsza. Po 2 miesiącach użytkowania musiałem nóżkę z przyssawką rozkręcić i przyssawkę podkleić bo guma zaczęła pękać od strony mocowania do uchwytu (uchwyt zaczął się po prostu trząść bo zrobił się luz). Mechanizm mocowania telefonu póki co (3 miesiące użytkowania) działa bez zarzutu.  |  rating (float) |
+| text (string) |  rating (float) |
 |---|---|
 | Jako do ceny dobra. Przyssawka mogłaby być lepsza. Po 2 miesiącach użytkowania musiałem nóżkę z przyssawką rozkręcić i przyssawkę podkleić bo guma zaczęła pękać od strony mocowania do uchwytu (uchwyt zaczął się po prostu trząść bo zrobił się luz). Mechanizm mocowania telefonu póki co (3 miesiące użytkowania) działa bez zarzutu.  | 3  |
 
