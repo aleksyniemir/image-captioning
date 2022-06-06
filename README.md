@@ -38,7 +38,7 @@ NLTK dostarcza wiele implementacji różnych algorytmów, między innymi:
 * porter - oparty na algorytmie Portera
 
 Dla przykładu sposób działania stemmera Regexp, który używa wyrażeń regularnych do identyfikacji 
-afiksów morfologicznych i usuwa wszystkie pod łańcuchy pasujące do wyrażeń regularnych:
+afiksów morfologicznych i usuwa wszystkie podłańcuchy pasujące do wyrażeń regularnych:
 ```python
 >>> from nltk.stem import RegexpStemmer
 >>> st = RegexpStemmer('ing$|s$|e$|able$', min=4)
@@ -219,11 +219,11 @@ na stronach
 
 ## Tokenizacja 
 
-Tokenizatory dzielą ciągi znaków na listy pod łańcuchów, na przykład mogą 
+Tokenizatory dzielą ciągi znaków na listy podłańcuchów, na przykład mogą 
 być używane do znajdowania słów i znaków interpunkcyjnych w łańcuchu znaków.
 
 ### NTLK
-Przykład użycia tokenizatora z [paczki NTLK](https://www.nltk.org/api/nltk.tokenize.html), najprostszy moduuł
+Przykład użycia tokenizatora z [paczki NTLK](https://www.nltk.org/api/nltk.tokenize.html), najprostszy moduł
 tokenizujący:
 ```python
 >>> from nltk.tokenize import word_tokenize
@@ -262,7 +262,7 @@ Model probabilistyczny, którego celem jest obliczenie prawdopodobieństwa wyst�
 
 Do tej pory pionierem do spraw języka naturalnego w wielu językach był googlowski 
 BERT, jednak w klasyfikacji GLUE dostał tylko 80 na 100 punktów. Na podstawie 
-BERT’a powstał Polski RoBERT, który osiągnął 87/100 punktów w teście KLEJ, a
+BERT’a powstał Polski RoBERT, który osiągnął 87/100 punktów w rankingu KLEJ, a
 jeszcze potem na podstawie RoBERTA powstał HerBERT, osiągając najwyższą do 
 tej pory notę 88/100.
 
@@ -275,7 +275,7 @@ o [tutaj](https://klejbenchmark.com/leaderboard/).
 
 Ranking jest tworzony na podstawie dziewięciu zadań dotyczących rozumienia
 języka polskiego, wszystkie z różnych dziedzin i o różnych celach. Większość 
-zadań jest tworzona na podstawie istniejących zbiorów danych, ale udostępniamy 
+zadań jest tworzona na podstawie istniejących zbiorów danych, ale udostępniany jest również
 również nowy zbiór danych do analizy sentymentu z dziedziny handlu elektronicznego.
 Zawiera zadania, które mają stosunkowo małe zbiory danych i wymagają szerokiej 
 wiedzy zewnętrznej do ich rozwiązania. Promuje on wykorzystanie uczenia 
@@ -283,7 +283,7 @@ transferowego zamiast trenowania oddzielnych modeli od podstaw. Dodatkowo zapewn
 automatyczną ocenę oraz udostępnia tablice liderów. Jedynym wymogiem jest przygotowanie
 modelu do odpowiedniego formatu.
 
-#### Przewidziane zadania
+#### Przewidziane zadania na podstawie zbiorów danych
 
 - NKJP-NER - NKJP-NER opiera się na adnotowanej przez człowieka części NKJP. 
 Zadanie polega na przewidzeniu typu nazwanego podmiotu.
@@ -396,7 +396,7 @@ for pred in nlp(f"Adam Mickiewicz wielkim polskim {nlp.tokenizer.mask_token} by�
 
 #### Cased
 
-Wszystko takie same jak w cased, tylko że ze zmianą na "Whole Word Masking" - maskowanie wszystkich pod słów danego słowa.
+Wszystko zostało zrobione sam samo jak w przypadku modelu uncased, tylko że ze zmianą na "Whole Word Masking" - maskowanie wszystkich podsłów danego słowa.
 
 Sposób użycia:
 
@@ -422,7 +422,7 @@ Wyniki obydwu wariantów w rankingu KLEJ:
 ### RoBERTa
 
 Model stworzony przez Ośrodek Przetwarzania Informacji na podstawie BERTa. Powstały dwa modele, large i
-base, z czego large został wytrenowany na około 130GB danych, a do mniejszy na 20GB - wśród korpusów
+base, z czego large został wytrenowany na około 130GB danych, a mniejszy na 20GB - wśród korpusów
 znajdowały się wysokiej jakości teksty z Wikipedii, dokumenty polskiego parlamentu, wypowiedzi z mediów społecznościowych, książki
 , artykuły, oraz dłuższe formy pisane. Z obu 
 można korzystać w zależności od potrzeb i możliwości technicznych. Pierwszy oferuje większą precyzję 
@@ -520,7 +520,7 @@ tysiące pre-trained modeli do zadań dotyczących tekstu, obrazów, oraz audio.
 
 \* L - the number of encoder blocks, H - hidden size, A - the number of attention heads <br/>
 
-#### Jak używać z Fairseq:
+#### Jak korzystać z Fairseq:
 
 ```python
 import os
@@ -544,7 +544,7 @@ output = roberta.extract_features(input)
 print(output[0][1])
 ```
 
-#### Jak używać Hugging Transformers
+#### Jak używać Hugging Transformers:
 
 ```python
 import torch, os
@@ -616,9 +616,9 @@ output = model(
 ### Model językowy autorstwa Teresy Sas
 
 Model jest zbudowany na zasobach tekstów o tematyce akademickiej i ogólnej, obejmując prawie 800 tyś. słów. W linku możemy pobrać zipa, w którym znajdują się trzy pliki:
-•	model_2d_forward.txt - model bigramowy zawierający prawdopodobieństwa następstwa słów p(w_i | w_{i-1} ) dla porządku od lewej do prawej
-•	model 3d_bakward.txt - model trigramowy zawierający prawdopodobieństwa p( w_i | w_{i+1} w_{i+2} ) dla porządku odwróconego
-•	word_list.txt - lista słów występujących w modelu
+-	model_2d_forward.txt - model bigramowy zawierający prawdopodobieństwa następstwa słów p(w_i | w_{i-1} ) dla porządku od lewej do prawej
+-	model 3d_bakward.txt - model trigramowy zawierający prawdopodobieństwa p( w_i | w_{i+1} w_{i+2} ) dla porządku odwróconego
+-	word_list.txt - lista słów występujących w modelu
 
 Model może być wykorzystany w badaniach nad rozpoznawaniem mowy i w inżynierii języka naturalnego dla języka polskiego.
 
@@ -644,7 +644,7 @@ word-embedinngi w powyższej implementacji, używana jest funkcja "evaluation_wo
 
 Do testowania został użyty plik dostarczony przez [facebook fastext](https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.pl.300.vec.gz). Żeby określić podobieństwo słów, użyto polskiej wersji [SimLex999](http://zil.ipipan.waw.pl/CoDeS?action=AttachFile&do=view&target=MSimLex999_Polish.zip), stworzonej przez IPIPAN.
 
-Dokładniejszy opis, jak i Obszerna tabelka z wynikami znajduje się w podanym w pierwszej linijce linku.
+Dokładniejszy opis, jak i obszerna tabelka z wynikami znajduje się w podanym w pierwszej linijce linku.
 
 ### Opis word embeddingów Sławomira Dadasa
 
@@ -666,7 +666,7 @@ if __name__ == '__main__':
     
 # [('cyrankiewicz', 0.818274736404419), ('gomułka', 0.7967918515205383), ('raczkiewicz', 0.7757788896560669), ('jaruzelski', 0.7737460732460022), ('pużak', 0.7667238712310791)]
 ```
-Prezentacja dotycząca Word2Vec znajduje się o [tutaj](Prezentacja dotycząca Word2Vec znajduje się o [tutaj](http://compling.hss.ntu.edu.sg/courses/hg7017/pdf/word2vec%20and%20its%20application%20to%20wsd.pdf).
+Prezentacja dotycząca Word2Vec znajduje się o [tutaj](http://compling.hss.ntu.edu.sg/courses/hg7017/pdf/word2vec%20and%20its%20application%20to%20wsd.pdf).
 
 #### FastText
 
@@ -762,7 +762,7 @@ Więcej informacji o word embeddingach możemy znaleźć o [tutaj](https://githu
 
 ## Zbiory danych
 
-[Zbiór](https://opus.nlpl.eu/OpenSubtitles-v2018.php) zawierający między innymi polskie napisy do filmów. Z dwóch źródeł się dowiedziałem, że zawiera sporo powtórzeń.
+[Zbiór](https://opus.nlpl.eu/OpenSubtitles-v2018.php) zawierający między innymi polskie napisy do filmów. Zawiera sporo powtórzeń.
 
 ```text
 The Loner You love curry, right? I'll give you more. Hey! Is it good? Hey, ugly. Look at her. - Craz...
@@ -801,10 +801,9 @@ Na podstawie korpusu powstały dwie wyszukiwarki:
 
 http://nkjp.pl/poliqarp/
 
-Używany między innymi do Morfeusza 2.
+Używana między innymi do Morfeusza 2.
 
 [Ściągawka](http://nkjp.pl/poliqarp/help/pl.html) do używania korpusu. Znajdują się w niej między innymi zapytania o:
-* 
   * segmenty
   * formy podstawowe
   * znaczniki morfosyntaktyczne
@@ -869,7 +868,7 @@ zawiera pojedynczą recenzję z etykietą sentymentu __label__meta_X.
 
 #### [Korpus zawierający mowę nienawiści](http://zil.ipipan.waw.pl/HateSpeech)
 
-Składa się z ponad 2000 postów scrapowanych z około 2000 postów z mediów społecznościowych. Pliki z rozszerzeniem
+Składa się z ponad 2000 postów scrapowanych z mediów społecznościowych. Pliki z rozszerzeniem
 frm, MYI, MYD.
 
 
@@ -877,6 +876,8 @@ frm, MYI, MYD.
 
 
 ### Zbiory użyte do embeddingów
+
+Do każdego zbioru został dodany jeden przykładowy wiersz.
 
 - https://clarin-pl.eu/dspace/handle/11321/442
 
