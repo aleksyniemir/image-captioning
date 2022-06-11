@@ -1009,6 +1009,8 @@ mofosyntaktyczną z adnotacją MWE.
 37. https://huggingface.co/datasets/allegro/klej-cbd
 38. https://huggingface.co/datasets/allegro/summarization-polish-summaries-corpus
 
+Link do githuba - https://github.com/aleksyniemir/image-captioning
+
 ## Cytowania
 ```bibtex
 @book{przepiorkowski2012narodowy,
@@ -1131,3 +1133,6 @@ url = {http://www.ejournals.eu/Schedae-Informaticae/2018/Volume-27/art/13931/},
 doi = {10.4467/20838476SI.18.008.10413}
 }
 ```
+
+
+We współpracy z https://github.com/epsonik
